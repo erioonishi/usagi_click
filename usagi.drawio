@@ -1,0 +1,398 @@
+<mxfile host="65bd71144e">
+    <diagram id="E7pA_YOgIZpUdQwwadlD" name="手書き草案">
+        <mxGraphModel dx="805" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1150" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="Iskd4NNXW7jZ0ZHs15Ae-1" value="うさちゃんのにんじんクリックハント🥕" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Iskd4NNXW7jZ0ZHs15Ae-2" value="手書き草案" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="sAyI42DJ0vcCLqmz55kr" name="草案">
+        <mxGraphModel dx="805" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1150" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-1" value="うさちゃんのにんじんクリックハント🥕" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-2" value="草案" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-3" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font style=&quot;font-size: 13px;&quot; color=&quot;#000000&quot;&gt;&lt;b&gt;楽しくできるクリック練習アプリ制作&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・マウスポインターをうさちゃん(うさぎ画像)に変更し、ユーザーがそれを動かしてクリック練習をする&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・画面に表示されたにんじん(にんじん画像)をクリック、ダブルクリック、ドラッグすることで進めていく&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・違う操作が行われた場合は正しい操作へ導くために「クリックじゃないとだめだよ！」など表示する&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・トータルステージは４ステージ&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="115" width="590" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-4" value="&lt;div style=&quot;line-height: 130%;&quot;&gt;&lt;b&gt;①スタート画面&lt;/b&gt;&lt;div&gt;　うさぎとにんじんのイラストの下にスタートボタンがあり、クリックすると１ステージへ遷移する&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="215" width="560" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-5" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;②１ステージ&lt;/b&gt;(にんじんもぐもぐステージ)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・画面上に大小差のあるにんじん(番号を書いたにんじんの画像を用意)を５個用意&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・ユーザーは番号順にクリックしていく&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・成功するとにんじんがかじられたのにんじん画像に代わる(かじられたにんじん画像用意)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・５個クリック終わるとClear画面に遷移&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="260" width="510" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-6" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;③clear画面&lt;/b&gt;は上部にClearと出て下部に横並びのボタンで次に進む？今日は終わる？と出る&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・次に進むボタンが押されたら２ステージへ進む&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・今日は終わるボタンが押されたら終了画面へと進む。&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　終了画面にはおつかれさまでしたと文字が出てその下にウサギの画像を設置して、一番下に閉じるボタンを設置し、&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　閉じるボタンをクリックするとアプリ画面が消えるローカルサーバーを立てた場合はサーバーも一種に切断&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="362" width="660" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-7" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;④２ステージ&lt;/b&gt;(にんじん収穫ステージ)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・画面上に小さめのにんじん(にんじん画像準備)を10個用意&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・にんじんをダブルクリックするとにんじんが消える&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・10個ダブルクリックして全部消えるとClear画面に遷移&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="465" width="340" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-8" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;⑤clear画面&lt;/b&gt;は上部にClearと出て下部に横並びのボタンで次に進む？今日は終わる？と出る&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・次に進むボタンが押されたら３ステージへ進む&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・今日は終わるボタンが押されたら終了画面へと進む。&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　終了画面にはおつかれさまでしたと文字が出てその下にウサギの画像を設置して、一番下に閉じるボタンを設置し、&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　閉じるボタンをクリックするとアプリ画面が消えるローカルサーバーを立てた場合はサーバーも一種に切断&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="549" width="660" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-9" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;⑥３ステージ&lt;/b&gt;(にんじんをカバンに入れるステージ)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・画面右ににんじんを３個用意(にんじん画像用意)画面左にかばんを用意(かばん画像用意)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・右においてあるにんじんをドラッグ操作でかばんまで移動させる&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・3つ移動出来たらClear画面に遷移&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="653" width="510" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-10" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;⑦clear画面&lt;/b&gt;は上部にClearと出て下部に横並びのボタンで次に進む？今日は終わる？と出る&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・次に進むボタンが押されたら４ステージへ進む&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・今日は終わるボタンが押されたら終了画面へと進む。&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　終了画面にはおつかれさまでしたと文字が出てその下にウサギの画像を設置して、一番下に閉じるボタンを設置し、&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　閉じるボタンをクリックするとアプリ画面が消えるローカルサーバーを立てた場合はサーバーも一種に切断&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="736" width="660" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-11" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;⑧４ステージ&lt;/b&gt;(うさちゃんお家へ帰るステージ)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・画面左上にうさちゃんの家を設置(家の画像準備)右下をスタートとして少し入り組んだ家まで道を表示する&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　(幅はマウスポインターのうさちゃんがギリギリ通れる程度)&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・道からはみ出さないようにお家までうさちゃんをドラッグする&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　失敗したらContinue画面へ成功したらClear画面に遷移&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="839" width="610" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-12" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;b&gt;⑨Continue画面&lt;/b&gt;は上部にContinue画面と出て下部に横並びのボタンでもう一度？今日は終わる？と出る&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・もう一度ボタンが押されたら４ステージへ戻る&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;・今日は終わるボタンが押されたら終了画面へと進む。&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;font color=&quot;#000000&quot;&gt;　&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="939" width="580" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="Qc1QT0L_unZoiCFUP7Ca-13" value="&lt;div style=&quot;text-align: left; line-height: 140%;&quot;&gt;&lt;font&gt;&lt;b&gt;➉終了画面&lt;/b&gt;にはおつかれさまでしたと文字が出てその下にうさぎの画像を設置して、一番下に閉じるボタンを設置し、&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left; line-height: 140%;&quot;&gt;&lt;font&gt;　閉じるボタンをクリックするとアプリ画面が消えるローカルサーバーを立てた場合はサーバーも一種に切断&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="1010" width="660" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="WhDTUzcZRKG3z6mPxe_a" name="要件定義">
+        <mxGraphModel dx="805" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="TXciGgZ6qaFh0_YUFR-4-1" value="うさちゃんのにんじんクリックハント🥕" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="40" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="TXciGgZ6qaFh0_YUFR-4-2" value="要件定義" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="40" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="TXciGgZ6qaFh0_YUFR-4-5" value="&lt;b style=&quot;line-height: 150%;&quot;&gt;アプリ名&lt;/b&gt;：うさちゃんのにんじんクリックハント🥕&lt;div style=&quot;line-height: 150%;&quot;&gt;&lt;span data-end=&quot;150&quot; data-start=&quot;141&quot;&gt;&lt;b&gt;開発技術&lt;/b&gt;&lt;/span&gt;&lt;strong data-end=&quot;150&quot; data-start=&quot;141&quot;&gt;：&lt;/strong&gt; Python（Flask）＋ HTML / CSS / JavaScript&lt;/div&gt;&lt;div style=&quot;line-height: 150%;&quot;&gt;&lt;span data-end=&quot;201&quot; data-start=&quot;192&quot;&gt;&lt;b&gt;利用環境&lt;/b&gt;&lt;/span&gt;&lt;strong data-end=&quot;201&quot; data-start=&quot;192&quot;&gt;：&lt;/strong&gt; ローカルWebアプリ（Flaskサーバーで起動）&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="120" width="330" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-1" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;1.目的&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="203" width="60" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-4" value="・パソコン初心者の入門であるマウス操作と楽しく（クリック、ダブルクリック、ドラッグ）を学べる&lt;div style=&quot;line-height: 140%;&quot;&gt;・かわいいうさちゃんを操作しながら、各ステージで異なるマウス操作に挑戦できる&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・ゲーム・遊び感覚で挑戦できる&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・1ステージずつ操作が変化し、自然に習得できる構成とする&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="230" width="570" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-5" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;2.機能&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="314" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-6" value="&lt;div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・スタート画面&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・ステージ１：クリック練習&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・ステージ２：ダブルクリック練習&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・ステージ３：ドラッグ練習&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・ステージ４：ロングドラッグ練習&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・クリア画面&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・コンティニュー画面&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;font&gt;・終了画面&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="338" width="220" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-7" value="&lt;div style=&quot;line-height: 160%;&quot;&gt;うさちゃんとにんじんのイラストと「スタート」ボタンを表示&lt;div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;番号順ににんじんをクリックして食べる（クリック動作）&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;小さなにんじんをダブルクリックで収穫（ダブルクリック動作）&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;にんじんをドラッグでかばんに入れる（ドラッグ操作）&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;うさちゃんを道から外れず家までドラッグ移動（ドラッグ＋当たり判定）&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;各ステージ後に表示「次へ」「今日は終わる？」ボタン付き&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;ステージ4失敗時に表示「もう一度」「今日は終わる？」ボタン付き&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;「おつかれさまでした」＋うさちゃん画像＋閉じるボタンでアプリ・サーバー終了&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 160%;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="337" width="470" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-8" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="130" y="356" as="sourcePoint"/>
+                        <mxPoint x="280" y="356.1" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-9" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.293;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="207.01" y="374.99999999999994" as="sourcePoint"/>
+                        <mxPoint x="280" y="375.28000000000003" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-10" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="239" y="394" as="sourcePoint"/>
+                        <mxPoint x="279" y="394.28000000000003" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-11" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.293;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="207.01" y="412.99999999999994" as="sourcePoint"/>
+                        <mxPoint x="280" y="413.28000000000003" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-12" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="240" y="432" as="sourcePoint"/>
+                        <mxPoint x="280" y="432.28000000000003" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-13" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="130" y="452" as="sourcePoint"/>
+                        <mxPoint x="280" y="452.1" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-14" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="169" y="471" as="sourcePoint"/>
+                        <mxPoint x="279" y="471.1" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-15" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.318;exitY=0.894;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="0JwlWXXWIpmjMDokBUYo-6" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="130" y="490" as="sourcePoint"/>
+                        <mxPoint x="280" y="490.1" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-16" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;3.ステージ詳細&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="522" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="0JwlWXXWIpmjMDokBUYo-17" value="&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;b&gt;ステージ1：にんじんもぐもぐステージ（クリック）&lt;/b&gt;&lt;div&gt;・にんじん画像（大小、番号付き）を5個設置&lt;/div&gt;&lt;div&gt;・番号順にクリックで進行&lt;/div&gt;&lt;div&gt;・正解でかじられた画像に切り替え&lt;/div&gt;&lt;div&gt;・完了後クリア画面へ&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="548" width="310" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-1" value="&lt;b&gt;ステージ2：にんじん収穫ステージ（ダブルクリック）&lt;/b&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・小さなにんじん画像10個をランダムに配置&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・ダブルクリックでにんじんが消える&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・全て消すとクリア画面へ&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="645" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-2" value="&lt;b style=&quot;line-height: 140%;&quot;&gt;ステージ3：カバンへ収納ステージ（ドラッグ）&lt;/b&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・にんじん画像を右側に3つ設置&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・左側にカバン画像配置&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・ドラッグ＆ドロップでカバンへ&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・成功でクリア画面へ&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="720" width="280" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-3" value="&lt;b style=&quot;line-height: 140%;&quot;&gt;ステージ4：おうちへ誘導（ロングドラッグ＋当たり判定）&lt;/b&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・うさちゃん画像をドラッグして家（左上）へ導く&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・道を通る背景画像（白い道、黄緑背景）をCanvasで描画&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・道から外れたらコンティニュー画面へ&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・ゴールですべてクリア画面へ&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="39" y="817" width="340" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-4" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;4. 技術スタック（&lt;/font&gt;&lt;/b&gt;開発において使われる技術やツール、プログラミング言語&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;）&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="32" y="930" width="460" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-5" value="&lt;span style=&quot;line-height: 140%;&quot; data-start=&quot;1847&quot; data-end=&quot;1858&quot;&gt;・サーバーサイド&lt;/span&gt;：Python + Flask&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;span data-start=&quot;1876&quot; data-end=&quot;1887&quot;&gt;・フロントエンド&lt;/span&gt;：HTML / CSS / JavaScript&lt;/div&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;・&lt;span style=&quot;background-color: transparent;&quot; data-end=&quot;1931&quot; data-start=&quot;1914&quot;&gt;画像判定処理（ステージ4）&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;：HTML5 canvas +&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;getImageData()&lt;/span&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;（JavaScript）&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="39" y="963" width="450" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="01OQcMIUNqzbPXU5vCWl-6" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;5.ファイル構成（予定）&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="27" y="1034" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-1" value="usachan.app/" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="1080" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-2" value="app.py" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1120" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-3" value="static/" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1160" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-4" value="style.css" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1200" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-5" value="script.js" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1240" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-6" value="images/" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1280" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-9" value="usagi.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1320" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-10" value="ninjin.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1360" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-11" value="number_ninjin.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1400" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-12" value="bag.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1440" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-13" value="house.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1520" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-14" value="house.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1480" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-15" value="path_bg.png" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="160" y="1560" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-16" value="templates/" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1600" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-17" value="start.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1640" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-18" value="stage1.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1680" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-19" value="stage2&lt;span style=&quot;font-family: monospace; font-size: 0px; text-align: start; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22stage1.html%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22120%22%20y%3D%221680%22%20width%3D%22120%22%20height%3D%2223%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1720" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-20" value="stage3.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1760" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-21" value="stage4.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1800" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-22" value="clear.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1840" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="CK2QwYPXdnQrSHtWhpzV-23" value="end.html" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="1880" width="120" height="23" as="geometry"/>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-1" value="" style="endArrow=none;html=1;entryX=0.417;entryY=1.128;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="60" y="1610.952380952381" as="sourcePoint"/>
+                        <mxPoint x="59.79999999999997" y="1103.004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-2" value="" style="endArrow=none;html=1;entryX=0.417;entryY=1.128;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1290" as="sourcePoint"/>
+                        <mxPoint x="99.75999999999996" y="1183.004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-3" value="" style="endArrow=none;html=1;entryX=0.417;entryY=1.128;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1890" as="sourcePoint"/>
+                        <mxPoint x="99.82999999999997" y="1623.004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-4" value="" style="endArrow=none;html=1;entryX=0.417;entryY=1.128;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1570" as="sourcePoint"/>
+                        <mxPoint x="139.82999999999998" y="1303.004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-5" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="CK2QwYPXdnQrSHtWhpzV-4" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="99.96000000000001" y="1211.3600000000001" as="sourcePoint"/>
+                        <mxPoint x="140" y="1211.3600000000001" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-8" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="60" y="1132" as="sourcePoint"/>
+                        <mxPoint x="80" y="1132" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-9" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="60" y="1171.42" as="sourcePoint"/>
+                        <mxPoint x="80" y="1171.42" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-10" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1251.42" as="sourcePoint"/>
+                        <mxPoint x="120" y="1251.42" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-11" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1289.42" as="sourcePoint"/>
+                        <mxPoint x="120" y="1289.42" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-12" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1331.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1331.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-13" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1371.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1371.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-14" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1411.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1411.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-15" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1451.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1451.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-16" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1491.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1491.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-17" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1531.4" as="sourcePoint"/>
+                        <mxPoint x="160" y="1531.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-18" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="140" y="1569" as="sourcePoint"/>
+                        <mxPoint x="160" y="1569" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-19" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1651.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1651.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-20" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1691.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1691.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-21" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1731.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1731.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-22" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1771.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1771.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-23" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1811.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1811.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-24" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1851.4" as="sourcePoint"/>
+                        <mxPoint x="120" y="1851.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-25" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="100" y="1889" as="sourcePoint"/>
+                        <mxPoint x="120" y="1889" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rH6xytitIzItG-4sc9ZK-26" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="60" y="1610.4" as="sourcePoint"/>
+                        <mxPoint x="80" y="1610.4" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="aWxJ7GfktoR5MhQIb6hv" name="クラス図">
+        <mxGraphModel dx="805" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="NQn59bQjvcfvdRwAvanj" name="画面遷移図">
+        <mxGraphModel dx="805" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="H6PQqbsyBa6gF1gMO6YZ" name="シーケンス図">
+        <mxGraphModel dx="728" dy="656" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
