@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  background-color: #f2f8f2;/* もっともっと薄いパステルグリーン */
+  font-family: 'Yomogi', sans-serif;
+}
+
+#game-wrapper {
+  width: 800px;
+  height: 600px;
+  background-color: #def69b; /* ゲーム画面の緑背景 */
+  margin: 40px auto 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 影で浮いてる感じ */
+  position: relative;
+  overflow: hidden;
+  font-family: 'Yomogi', sans-serif;
+  border-radius: 20px;  /* ここで角丸に */
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 26px;
+  color: #333;
+  position: relative;
+  z-index: 10;
+  font-family: 'Yomogi', sans-serif;
+}
+
+.carrot-wrapper {
+  position: absolute;
+  text-align: center;
+}
+
+.carrot-label {
+  display: inline-block;
+  font-weight: bold;
+  color: #333;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  line-height: 1;
+  margin-bottom: 3px;
+  font-family: 'Yomogi', sans-serif;
+}
+
+.carrot {
+  cursor: inherit;
+  user-select: none;
+}
+
+/* ボタンにもYomogi */
+button { 
+  font-family: 'Yomogi', sans-serif;
+  font-size: 18px;
+  font-weight: bold; /* ← 太字に追加 */
+  padding: 6px 20px;  /* ← 縦のpaddingを小さくして薄く */
+  margin: 12px auto;
+  display: inline-block;
+  background-color: #ffdb4d;
+  color: #4b3d00;
+  border: 2px solid #e6b800;
+  border-radius: 20px;  /* 丸みはしっかり残す */
+  cursor: pointer;
+  box-shadow: 0 4px 0 #e6b800;  /* 高さ感も少し控えめに */
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #ffe066;
+  box-shadow: 0 2px 0 #e6b800;
+  transform: translateY(2px);
+}

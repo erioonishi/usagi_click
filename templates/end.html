@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>終了画面</title>
+  <style>
+    body {
+      background-color: #ccffcc;
+      text-align: center;
+      font-family: sans-serif;
+      padding-top: 50px;
+    }
+    #close-btn {
+      font-size: 20px;
+      padding: 10px 30px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>おつかれさまでした</h1>
+  <img src="{{ url_for('static', filename='usagi.png') }}" alt="うさちゃん" width="200" />
+  <br />
+  <button id="close-btn">閉じる</button>
+
+  <script>
+    document.getElementById('close-btn').addEventListener('click', () => {
+      // サーバーにシャットダウンをPOSTで依頼
+      fetch('/shutdown', { method: 'POST' })
+        .then(() => {
+          // ウィンドウを閉じる
+          window.close();
+        })
+        .catch(() => {
+          // シャットダウン失敗してもウィンドウ閉じる
+          window.close();
+        });
+    });
+  </script>
+</body>
+</html>

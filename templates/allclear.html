@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Clear画面</title>
+  <style>
+    body {
+      background-color: #ccffcc;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    #btns {
+      margin-top: 30px;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 0 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>ALL Clear</h1>
+  <div id="btns">
+    <form action="/stage1" style="display:inline;">
+      <button type="submit">もう一度最初からする？</button>
+    </form>
+    <form action="/end" style="display:inline; margin-left: 20px;">
+      <button type="submit">今日は終わる？</button>
+    </form>
+  </div>
+</body>
+</html>

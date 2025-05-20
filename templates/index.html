@@ -1,0 +1,97 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>うさちゃんクリック練習</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f2f8f2;
+      font-family: 'Yomogi', sans-serif;
+      margin: 0;
+    }
+
+    h1.top {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 50px;
+      color: #2e2929;
+    }
+
+    p.top_setumei {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 22px;
+      color: #333;
+      font-weight: bold; /* ← 太字に追加 */
+    }
+
+    .img-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 60px;
+    }
+
+    .sway-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sway {
+      transform-origin: bottom center; /* 足元を起点に回転 */
+      animation: swayLeftRight 3s ease-in-out infinite;
+    }
+
+    @keyframes swayLeftRight {
+  0% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+  100% {
+    transform: rotate(-3deg);
+  }
+}
+    img {
+      width: 200px;
+      height: 200px;
+      vertical-align: middle;
+    }
+
+    #start-btn {
+      padding: 10px 20px;
+      font-size: 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-family: 'Yomogi', sans-serif;
+    }
+
+    form {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-wrapper">
+    <h1 class="top">うさちゃんクリック練習</h1>
+    <p class="top_setumei">うさちゃんと一緒にクリックやドラッグの練習を頑張りましょう</p>
+
+    <div class="img-container">
+      <div class="sway-container">
+        <img class="sway" src="{{ url_for('static', filename='usagi.png') }}" alt="うさちゃん">
+      </div>
+      <div class="sway-container">
+        <img class="sway" src="{{ url_for('static', filename='ninjin.png') }}" alt="にんじん">
+      </div>
+    </div>
+
+    <form action="/stage1">
+      <button id="start-btn" type="submit">スタート</button>
+    </form>
+  </div>
+</body>
+</html>

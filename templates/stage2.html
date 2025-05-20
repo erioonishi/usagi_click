@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ステージ2：にんじん収穫</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <style>
+   #game-wrapper {
+  cursor: url("{{ url_for('static', filename='usagicur.png') }}") 20 20, auto;
+} 
+   #container {
+    position: relative;
+    width: 800px;
+    height: 540px; /* h1の高さ分を空けて重ならないように */
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  .carrot {
+    position: absolute;
+    width: 60px;
+    cursor: inherit;
+    user-select: none;
+  }
+    
+  </style>
+</head>
+<body>
+  <div id="game-wrapper">
+    <div id="title-text">
+      <h1>にんじんをダブルクリックで収穫！</h1>
+    </div>
+
+    <!-- にんじんはここに表示 -->
+  </div>
+
+  <script>
+    const wrapper = document.getElementById('game-wrapper');
+    const titleText = document.getElementById('title-text');
+    let count = 0;
+
+    function createCarrot() {
+      const img = document.createElement('img');
+      img.src = "{{ url_for('static', filename='ninjin.png') }}";
+      img.className = 'carrot';
+      img.style.width = '60px';
+
+      img.onload = () => {
+        const carrotWidth = 60;
+        // 画像のアスペクト比を保って高さを計算
+        const carrotHeight = img.naturalHeight * (carrotWidth / img.naturalWidth);
+
+        const maxX = wrapper.clientWidth - carrotWidth;
+        // タイトル部分の高さを引いた範囲に制限（はみ出し防止）
+        const maxY = wrapper.clientHeight - carrotHeight - titleText.clientHeight;
+
+        const x = Math.random() * maxX;
+        // Yはタイトル領域の下からランダム配置
+        const y = Math.random() * maxY + titleText.clientHeight;
+
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+      };
+
+      img.ondblclick = () => {
+        img.remove();
+        count++;
+        if (count >= 10) {
+          setTimeout(() => window.location.href = "/clear?from_stage=2", 800);
+        }
+      };
+
+      wrapper.appendChild(img);
+    }
+
+    for (let i = 0; i < 10; i++) {
+      createCarrot();
+    }
+  </script>
+</body>
+</html>

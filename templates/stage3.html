@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ステージ3：かばんに入れよう</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <style>
+    body {
+
+      cursor: url("{{ url_for('static', filename='usagicur.png') }}") 20 20, auto;
+      overflow: hidden;
+      margin: 0;
+      font-family: 'Yomogi', sans-serif;
+    }
+
+    .carrot {
+      position: absolute;
+      width: 100px;
+      cursor: inherit;
+    }
+
+    #bag {
+      position: absolute;
+      left: 50px;
+      top: 250px;
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-wrapper">
+    <h1 style="text-align:center">ドラッグしてにんじんをカバンへ！</h1>
+    <div id="container">
+      <img id="bag" src="{{ url_for('static', filename='kaban.png') }}">
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+    let count = 0;
+
+    for (let i = 0; i < 3; i++) {
+      const img = document.createElement('img');
+      img.src = "{{ url_for('static', filename='ninjin.png') }}";
+      img.className = 'carrot';
+      const baseLeft = 435;  // 横の開始位置はそのまま
+      const spacing = 110;   // にんじん幅100px + 間隔10px
+      img.style.left = (baseLeft + i * spacing) + 'px';
+      img.style.top = '270px';  // ちょっと下げた
+      img.draggable = true;
+      img.ondragstart = e => {
+        e.dataTransfer.setData('text/plain', i);
+        e.target.id = 'dragging';
+      };
+      container.appendChild(img);
+    }
+
+    const bag = document.getElementById('bag');
+    bag.ondragover = e => e.preventDefault();
+    bag.ondrop = e => {
+      e.preventDefault();
+      const dragging = document.getElementById('dragging');
+      if (dragging) {
+        dragging.remove();
+        count++;
+        if (count >= 3) {
+          setTimeout(() => window.location.href = "/clear?from_stage=3", 800);
+        }
+      }
+    };
+  </script>
+</body>
+</html>

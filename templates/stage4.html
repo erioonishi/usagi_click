@@ -1,0 +1,168 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ステージ4：うさちゃんお家へ帰る</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f2f8f2;
+      font-family: 'Yomogi', sans-serif;
+      margin: 0;
+      overflow: hidden;
+    }
+    #game-wrapper {/* ここだけ上に文章があるので無理やり上書き */
+      margin-top: 20px;
+    }
+    #instructions {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 10px;
+      font-family: 'Yomogi', sans-serif;
+      color: #333;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background-color: #ccffcc;
+      border: none;
+      cursor: grab; /* パーの手 */
+    }
+
+    canvas.dragging {
+      cursor: grabbing; /* グーの手 */
+    }
+  </style>
+</head>
+<body>
+  <h1>うさちゃんお家へ帰る</h1>
+  <div id="instructions">道からはみ出さずにうさちゃんをお家までドラッグしてください</div>
+  <div id="game-wrapper">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const michiImg = new Image();
+    michiImg.src = "{{ url_for('static', filename='michi.png') }}";
+    const houseImg = new Image();
+    houseImg.src = "{{ url_for('static', filename='house.png') }}";
+    const usagiImg = new Image();
+    usagiImg.src = "{{ url_for('static', filename='usagi.png') }}";
+
+    let usagiX = 710;
+    let usagiY = 520;
+    const usagiSize = 48;
+    const houseX = 20;
+    const houseY = 20;
+    const houseWidth = 100;
+    const houseHeight = 100;
+
+    let dragging = false;
+    let offsetX, offsetY;
+    let pathPixels;
+
+    michiImg.onload = () => {
+      drawScene();
+      ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+      pathPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      drawUsagi(usagiX, usagiY);
+    };
+
+    houseImg.onload = () => {
+      drawScene();
+      drawUsagi(usagiX, usagiY);
+    };
+
+    usagiImg.onload = () => {
+      drawScene();
+      drawUsagi(usagiX, usagiY);
+    };
+
+    function drawScene() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(houseImg, houseX, houseY, houseWidth, houseHeight);
+    }
+
+    function drawUsagi(x, y) {
+      ctx.drawImage(usagiImg, x, y, usagiSize, usagiSize);
+    }
+
+    function isOnPath(x, y) {
+      if (!pathPixels) return false;
+      const px = Math.floor(x);
+      const py = Math.floor(y);
+      if (px < 0 || py < 0 || px >= canvas.width || py >= canvas.height) return false;
+      const idx = (py * canvas.width + px) * 4;
+      const r = pathPixels.data[idx];
+      const g = pathPixels.data[idx + 1];
+      const b = pathPixels.data[idx + 2];
+      return (r >= 250 && g >= 250 && b >= 250);
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      if (mx >= usagiX && mx <= usagiX + usagiSize && my >= usagiY && my <= usagiY + usagiSize) {
+        dragging = true;
+        offsetX = mx - usagiX;
+        offsetY = my - usagiY;
+        canvas.classList.add('dragging');
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      let newX = mx - offsetX + usagiSize / 2;
+      let newY = my - offsetY + usagiSize / 2;
+
+      // ✅ ここで道から外れたら即アウト！
+      if (!isOnPath(newX, newY)) {
+        dragging = false;
+        canvas.classList.remove('dragging');
+        window.location.href = "/continue";
+        return;
+      }
+
+      // ⭕道の上にいるなら動かす
+      usagiX = mx - offsetX;
+      usagiY = my - offsetY;
+      drawScene();
+      drawUsagi(usagiX, usagiY);
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      canvas.classList.remove('dragging');
+      if (
+        usagiX + usagiSize > houseX &&
+        usagiX < houseX + houseWidth &&
+        usagiY + usagiSize > houseY &&
+        usagiY < houseY + houseHeight
+      ) {
+        window.location.href = "/allclear";
+      } else {
+        window.location.href = "/continue";
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      if (dragging) {
+        dragging = false;
+        canvas.classList.remove('dragging');
+        window.location.href = "/continue";
+      }
+    });
+  </script>
+</body>
+</html>
