@@ -1,0 +1,24 @@
+# Python関連
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# 仮想環境
+venv/
+env/
+ENV/
+
+# IDE関連
+.vscode/
+.idea/
+
+# その他
+*.log
+*.sqlite3
+.DS_Store
+
+# macOS関連
+.AppleDouble
+.LSOverride
