@@ -2,6 +2,7 @@ body {
   margin: 0;
   background-color: #f2f8f2;/* もっともっと薄いパステルグリーン */
   font-family: 'Yomogi', sans-serif;
+  color: #333;
 }
 
 #game-wrapper {
@@ -52,9 +53,9 @@ h1 {
 /* ボタンにもYomogi */
 button { 
   font-family: 'Yomogi', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold; /* ← 太字に追加 */
-  padding: 6px 20px;  /* ← 縦のpaddingを小さくして薄く */
+  padding: 15px 20px;  /* ← 縦のpaddingを小さくして薄く */
   margin: 12px auto;
   display: inline-block;
   background-color: #ffdb4d;

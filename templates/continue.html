@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <title>コンティニュー画面</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #ffcccc;
+    h1.continue {
       text-align: center;
-      font-family: sans-serif;
-      padding-top: 100px;
+      margin-top: 120px;
+      font-size: 43px;
     }
-    button {
+
+    p.message {
+      text-align: center;
       font-size: 24px;
-      padding: 12px 24px;
-      margin: 20px;
-      cursor: pointer;
+      margin-top: 20px;
+      font-weight: bold;
+      /* ← 太字に追加 */
+    }
+
+    #btns {
+      margin-top: 60px;
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
-  <h1>残念！やり直し！</h1>
-  <p>もう一度挑戦しよう！</p>
-  <button onclick="location.href='/stage4'">ステージ4に戻る</button>
-  <button onclick="location.href='/'">タイトルに戻る</button>
+  <div id="game-wrapper">
+    <h1 class="continue">残念…やり直し…</h1>
+    <p class="message">もう一度挑戦しよう！</p>
+    <div id="btns">
+      <form action="/stage4" method="get" style="display:inline-block;padding: 0 12px;">
+        <button type="submit">ステージ4に戻る</button>
+      </form>
+      <form action="/end" method="get" style="display:inline-block;padding: 0 12px;">
+        <button type="submit">今日は終わる？</button>
+      </form>
+    </div>
+  </div>
 </body>
+
 </html>

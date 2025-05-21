@@ -1,42 +1,91 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <title>終了画面</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #ccffcc;
-      text-align: center;
-      font-family: sans-serif;
-      padding-top: 50px;
+    h1.end {
+      font-size: 30px;
     }
+
+    p.browser_close {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #content {
+      text-align: center;
+      padding-top: 70px;
+    }
+
     #close-btn {
       font-size: 20px;
       padding: 10px 30px;
       cursor: pointer;
       margin-top: 30px;
     }
+
+    /* うさちゃんが足を軸に左右に揺れる */
+    #usagi {
+      width: 200px;
+      /* 足（画像の下中央）を軸に */
+      transform-origin: 50% 90%;
+      animation: swing 4s ease-in-out infinite;
+      user-select: none;
+      cursor: default;
+      /* 左端からスタート（アニメーション開始位置）に調整 */
+      animation-delay: 0s;
+    }
+
+    @keyframes swing {
+      0% {
+        transform: rotate(-15deg);
+      }
+
+      25% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: rotate(15deg);
+      }
+
+      75% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(-15deg);
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>おつかれさまでした</h1>
-  <img src="{{ url_for('static', filename='usagi.png') }}" alt="うさちゃん" width="200" />
-  <br />
-  <button id="close-btn">閉じる</button>
+  <div id="game-wrapper">
+    <div id="content">
+      <h1 class="end">おつかれさまでした♡</h1>
+      <img id="usagi" src="{{ url_for('static', filename='images/usagi.png') }}" alt="うさちゃん" />
+      <br />
+      <button id="close-btn">おわり</button>
+      <p class="browser_close">ブラウザも閉じてね🐰♡</p>
+    </div>
+  </div>
 
   <script>
     document.getElementById('close-btn').addEventListener('click', () => {
-      // サーバーにシャットダウンをPOSTで依頼
       fetch('/shutdown', { method: 'POST' })
         .then(() => {
-          // ウィンドウを閉じる
           window.close();
         })
         .catch(() => {
-          // シャットダウン失敗してもウィンドウ閉じる
           window.close();
         });
     });
   </script>
 </body>
+
 </html>

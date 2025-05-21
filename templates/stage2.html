@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <title>ステージ2：にんじん収穫</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
-   #game-wrapper {
-  cursor: url("{{ url_for('static', filename='usagicur.png') }}") 20 20, auto;
-} 
-   #container {
-    position: relative;
-    width: 800px;
-    height: 540px; /* h1の高さ分を空けて重ならないように */
-    overflow: hidden;
-    margin: 0 auto;
-  }
-  .carrot {
-    position: absolute;
-    width: 60px;
-    cursor: inherit;
-    user-select: none;
-  }
-    
+    #game-wrapper {
+      cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
+      auto;
+    }
+
+    #container {
+      position: relative;
+      width: 800px;
+      height: 540px;
+      /* h1の高さ分を空けて重ならないように */
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .carrot {
+      position: absolute;
+      width: 60px;
+      cursor: inherit;
+      user-select: none;
+    }
   </style>
 </head>
+
 <body>
   <div id="game-wrapper">
     <div id="title-text">
@@ -41,7 +46,7 @@
 
     function createCarrot() {
       const img = document.createElement('img');
-      img.src = "{{ url_for('static', filename='ninjin.png') }}";
+      img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
       img.className = 'carrot';
       img.style.width = '60px';
 
@@ -78,4 +83,5 @@
     }
   </script>
 </body>
+
 </html>

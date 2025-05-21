@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <title>Clear画面</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
-    h1.clear{
-       text-align: center;
-  margin-top: 100px;
-  font-size: 50px;
-  color: #333;
-  position: relative;
-  z-index: 10;
-  font-family: 'Yomogi', sans-serif;
+    h1.clear {
+      text-align: center;
+      margin-top: 140px;
+      font-size: 60px;
+      position: relative;
+      z-index: 10;
     }
-    body {
-      background-color: #f2f8f2;
-      font-family: 'Yomogi', sans-serif;
-      margin: 0;
-    }
-
     #btns {
       margin-top: 60px;
       text-align: center;
     }
-
     form {
       display: inline-block;
       margin: 0 15px;
     }
   </style>
 </head>
+
 <body>
   <div id="game-wrapper">
-    <h1 class="clear">Clear</h1>
+    <h1 class="clear">Clear!!</h1>
     <div id="btns">
       <form action="/next_stage" method="post">
         <input type="hidden" name="from_stage" value="{{ from_stage }}">
@@ -46,4 +39,5 @@
     </div>
   </div>
 </body>
+
 </html>

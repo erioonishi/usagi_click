@@ -1,134 +1,137 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <title>ステージ1：にんじんもぐもぐ</title>
   <style>
-  body {
-    
-    cursor: url("{{ url_for('static', filename='usagicur.png') }}") 20 20, auto;
-    margin: 0;
-    font-family: 'Yomogi', sans-serif;
-    overflow: hidden;
-  }
+    body {
 
-  .carrot {
-    cursor: inherit;
-    user-select: none;
-  }
+      cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
+      auto;
+    }
 
-  .carrot-wrapper {
-    position: absolute;
-    text-align: center;
-  }
+    .carrot {
+      cursor: inherit;
+      user-select: none;
+    }
 
-.carrot-label {
-  position: absolute;
-  bottom: 100%; /* にんじん画像の真上に固定 */
-  left: 50%;
-  transform: translateX(-50%) translateY(-6px); /* 中央揃え＆少し上にずらす */
-  font-weight: bold;
-  color: #333;
-  background: rgba(255, 255, 255, 0.95);
-  font-size: 22px;  /* 少し大きく */
-  padding: 4px 8px;
-  border-radius: 12px;
-  line-height: 1;
-  white-space: nowrap;
-  font-family: 'Yomogi', sans-serif;
-  pointer-events: none; /* 数字部分クリックでにんじんの反応を邪魔しないように */
-}
+    .carrot-wrapper {
+      position: absolute;
+      text-align: center;
+    }
 
-  #container {
-    position: relative;
-    width: 800px;
-    height: 600px;
-    margin: 0 auto;
-    overflow: hidden;
+    .carrot-label {
+      position: absolute;
+      bottom: 100%;
+      /* にんじん画像の真上に固定 */
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      /* 中央揃え＆少し上にずらす */
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.95);
+      font-size: 22px;
+      /* 少し大きく */
+      padding: 4px 8px;
+      border-radius: 12px;
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: none;
+      /* 数字部分クリックでにんじんの反応を邪魔しないように */
+    }
 
-  }
-</style>
+    #container {
+      position: relative;
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
+      overflow: hidden;
+
+    }
+  </style>
 </head>
+
 <body>
   <div id="game-wrapper">
-  <h1 style="text-align:center;">にんじんを順番にクリック！</h1>
-  <div id="container"></div>
+    <h1 style="text-align:center;">にんじんを順番にクリック！</h1>
+    <div id="container"></div>
 
-  <script>
-    const container = document.getElementById('container');
-    let current = 1;
+    <script>
+      const container = document.getElementById('container');
+      let current = 1;
 
-    const carrots = []; // 配置済みのにんじん情報
+      const carrots = []; // 配置済みのにんじん情報
 
-function createCarrot(num) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'carrot-wrapper';
+      function createCarrot(num) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'carrot-wrapper';
 
-  const label = document.createElement('div');
-  label.className = 'carrot-label';
-  label.textContent = num;
+        const label = document.createElement('div');
+        label.className = 'carrot-label';
+        label.textContent = num;
 
-  const img = document.createElement('img');
-  img.src = "{{ url_for('static', filename='ninjin.png') }}";
-  img.className = 'carrot';
+        const img = document.createElement('img');
+        img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
+        img.className = 'carrot';
 
-  const isLarge = Math.random() > 0.5;
-  const carrotSize = isLarge ? 80 : 50;
-  img.style.width = carrotSize + "px";
-  img.dataset.num = num;
+        const isLarge = Math.random() > 0.5;
+        const carrotSize = isLarge ? 80 : 50;
+        img.style.width = carrotSize + "px";
+        img.dataset.num = num;
 
-  // 配置位置を決定（重なりを避ける）
-  let x, y, tries = 0;
-  const margin = 50; // 画面端とにんじんの間に余白を持たせる
-  const labelHeight = 20;
-  const wrapperWidth = carrotSize;
-  const wrapperHeight = carrotSize + labelHeight + 2;
+        // 配置位置を決定（重なりを避ける）
+        let x, y, tries = 0;
+        const margin = 50; // 画面端とにんじんの間に余白を持たせる
+        const labelHeight = 20;
+        const wrapperWidth = carrotSize;
+        const wrapperHeight = carrotSize + labelHeight + 2;
 
-  do {
-    x = Math.random() * (800 - wrapperWidth - margin * 2) + margin;
-    y = Math.random() * (600 - wrapperHeight - margin * 2) + margin;
+        do {
+          x = Math.random() * (800 - wrapperWidth - margin * 2) + margin;
+          y = Math.random() * (600 - wrapperHeight - margin * 2) + margin;
 
-    // 重なり判定（他のにんじんと）
-    var overlapping = carrots.some(c => {
-      return !(
-        x + wrapperWidth < c.x ||
-        x > c.x + c.width ||
-        y + wrapperHeight < c.y ||
-        y > c.y + c.height
-      );
-    });
+          // 重なり判定（他のにんじんと）
+          var overlapping = carrots.some(c => {
+            return !(
+              x + wrapperWidth < c.x ||
+              x > c.x + c.width ||
+              y + wrapperHeight < c.y ||
+              y > c.y + c.height
+            );
+          });
 
-    tries++;
-    if (tries > 100) break; // 試行回数が多すぎたら諦める
-  } while (overlapping);
+          tries++;
+          if (tries > 100) break; // 試行回数が多すぎたら諦める
+        } while (overlapping);
 
-  wrapper.style.left = `${x}px`;
-  wrapper.style.top = `${y}px`;
+        wrapper.style.left = `${x}px`;
+        wrapper.style.top = `${y}px`;
 
-  // 配置記録
-  carrots.push({ x, y, width: wrapperWidth, height: wrapperHeight });
+        // 配置記録
+        carrots.push({ x, y, width: wrapperWidth, height: wrapperHeight });
 
-  img.onclick = () => {
-    if (parseInt(img.dataset.num) === current) {
-      img.src = "{{ url_for('static', filename='ninjin2.png') }}";
-      current++;
-      if (current > 5) {
-        setTimeout(() => window.location.href = "/clear?from_stage=1", 800);
+        img.onclick = () => {
+          if (parseInt(img.dataset.num) === current) {
+            img.src = "{{ url_for('static', filename='images/ninjin2.png') }}";
+            current++;
+            if (current > 5) {
+              setTimeout(() => window.location.href = "/clear?from_stage=1", 800);
+            }
+          }
+        };
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(img);
+        container.appendChild(wrapper);
       }
-    }
-  };
 
-  wrapper.appendChild(label);
-  wrapper.appendChild(img);
-  container.appendChild(wrapper);
-}
-
-    for (let i = 1; i <= 5; i++) {
-      createCarrot(i);
-    }
-  </script>
+      for (let i = 1; i <= 5; i++) {
+        createCarrot(i);
+      }
+    </script>
   </div>
 </body>
+
 </html>

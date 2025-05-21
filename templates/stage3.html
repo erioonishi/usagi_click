@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <title>ステージ3：かばんに入れよう</title>
@@ -8,10 +9,9 @@
   <style>
     body {
 
-      cursor: url("{{ url_for('static', filename='usagicur.png') }}") 20 20, auto;
-      overflow: hidden;
-      margin: 0;
-      font-family: 'Yomogi', sans-serif;
+      cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
+      auto;
+
     }
 
     .carrot {
@@ -28,11 +28,12 @@
     }
   </style>
 </head>
+
 <body>
   <div id="game-wrapper">
     <h1 style="text-align:center">ドラッグしてにんじんをカバンへ！</h1>
     <div id="container">
-      <img id="bag" src="{{ url_for('static', filename='kaban.png') }}">
+      <img id="bag" src="{{ url_for('static', filename='images/kaban.png') }}">
     </div>
   </div>
 
@@ -42,7 +43,7 @@
 
     for (let i = 0; i < 3; i++) {
       const img = document.createElement('img');
-      img.src = "{{ url_for('static', filename='ninjin.png') }}";
+      img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
       img.className = 'carrot';
       const baseLeft = 435;  // 横の開始位置はそのまま
       const spacing = 110;   // にんじん幅100px + 間隔10px
@@ -71,4 +72,5 @@
     };
   </script>
 </body>
+
 </html>
