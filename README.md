@@ -52,22 +52,22 @@
 
 ## 🚀 実行方法
 
-1. **Pythonをインストールしてください。**  
+1. **Pythonをインストールしてください。**
 2. **必要なパッケージをインストールしましょう！**
    ```bash
-   pip install flask （ターミナルに入力してEnter）
+   pip install flask
 2. **リポジトリをクローン**
    ```bash
    git clone https://github.com/erioonishi/usagi_click.git
 3. **アプリを起動**
    ```bash
-   python app.py　（ターミナルでPythonファイルを実行する）
+   python app.py
 4. **サーバーが起動すると以下のURLがターミナルに表示されます**
    ```bash
    http://127.0.0.1:5000
-5. **ブラウザで開く**
+5. **ブラウザで開く（アクセスすると、クリック練習を開始できます。）**
    ```bash
-   http://127.0.0.1:5000 にアクセスすると、クリック練習を開始できます。
+   http://127.0.0.1:5000 
 
 ## 📂 ディレクトリ構成
 
