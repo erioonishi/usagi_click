@@ -1,38 +1,102 @@
- #Flaskの基本機能(アプリ作成、HTML表示、リダイレクト、リクエスト取得)を読み込む
-from flask import Flask, render_template, redirect, request
-import threading #スレッドを使うためのライブラリ(現状、使っていない）
-import os #OS操作のためのライブラリ(サーバーの終了に使う)
-import signal #プロセスに信号を送るためのライブラリ(サーバー停止用)
+from flask import Flask, render_template, redirect, request, session, url_for  
+import threading  
+import os
+import signal
+import time
+import json
 
-app = Flask(__name__) #Flaskアプリのインスタンスを作る
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # セッション利用のための秘密鍵
 
-@app.route('/') #URLのルート(トップページ / )にアクセスしたら、index.htmlを返す
+# ランキングJSONファイルのパス（同じフォルダに置く想定）
+RANKING_FILE = 'ranking.json'
+
+@app.route('/')
 def index():
+    # トップページ（名前入力フォーム）
     return render_template('index.html')
 
-@app.route('/stage1') #/stage1にアクセスしたら、stage1.htmlを返す
+@app.route('/start', methods=['POST'])
+def start():
+    # index.htmlのフォームからユーザー名を受け取り、セッションに保存、ステージ1へリダイレクト
+    username = request.form.get('username')
+    if username:
+        session['username'] = username
+        session['stage1_start'] = time.time()  # ステージ1開始時刻を保存
+        return redirect('/stage1')
+    return redirect('/')
+
+@app.route('/stage1')
 def stage1():
+    session['stage1_start'] = time.time()  # 開始時間を最新にセット
+    # ステージ1の画面描画処理など
     return render_template('stage1.html')
 
-@app.route('/stage2') #/stage2にアクセスしたら、stage2.htmlを返す
+
+@app.route('/stage2')
 def stage2():
+    # ステージ2開始時刻を保存
+    session['stage2_start'] = time.time()
     return render_template('stage2.html')
 
-@app.route('/stage3') #/stage3にアクセスしたら、stage3.htmlを返す
+@app.route('/stage3')
 def stage3():
+    # ステージ3開始時刻を保存
+    session['stage3_start'] = time.time()
     return render_template('stage3.html')
 
-@app.route('/stage4') #/stage4にアクセスしたら、stage4.htmlを返す
+@app.route('/stage4')
 def stage4():
+    # ステージ4開始時刻を保存
+    session['stage4_start'] = time.time()
     return render_template('stage4.html')
 
-@app.route('/clear') #/clearにアクセスしたら
+@app.route('/clear')
 def clear():
-    #どのステージから来たか(URLのクエリパラメータから取得)<例>?from_stage=2
-    stage = request.args.get('from_stage', '1')  #デフォルト1
-    return render_template('clear.html', from_stage=stage) #clear.htmlにその情報を渡して返す
+    # クリア画面：どのステージか取得し、経過時間計算・ランキング更新
+    stage = request.args.get('from_stage', '1')
+    username = session.get('username', '匿名')
 
-#/next_stageにPOSTで現在のステージ番号を受け取り、次のステージのページにリダイレクトする
+    start_key = f'stage{stage}_start'
+    start_time = session.get(start_key)
+    if start_time:
+        elapsed = round(time.time() - start_time, 2)
+    else:
+        elapsed = 0.0
+
+    # ランキング読み込み
+    if os.path.exists(RANKING_FILE):
+        with open(RANKING_FILE, 'r', encoding='utf-8') as f:
+            try:
+                ranking = json.load(f)
+            except json.JSONDecodeError:
+                ranking = []
+    else:
+        ranking = []
+
+    # 新記録を追加（日時も追加）
+    entry = {
+        'name': username,
+        'stage': stage,
+        'time': elapsed,
+        'datetime': time.strftime('%Y-%m-%d %H:%M:%S')
+    }
+    ranking.append(entry)
+
+    # ステージ順、クリア時間順にソート（全体のランキング）
+    ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
+
+    # **指定ステージのみ抽出して上位5件に絞る**
+    filtered_ranking = [r for r in ranking if r['stage'] == stage][:5]
+
+    # ファイルに書き込み（全体のランキングを保存）
+    with open(RANKING_FILE, 'w', encoding='utf-8') as f:
+        json.dump(ranking, f, ensure_ascii=False, indent=2)
+
+    # enumerateはテンプレート側で使うので渡す（もし必要なら）
+    return render_template('clear.html', from_stage=stage, elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
+
+
 @app.route('/next_stage', methods=['POST'])
 def next_stage():
     current = request.form.get('from_stage')
@@ -47,30 +111,73 @@ def next_stage():
     else:
         return redirect('/')
 
-@app.route('/continue') #/continueにアクセスしたら、continue.htmlを返す
+@app.route('/continue')
 def continue_stage():
     return render_template('continue.html')
 
-@app.route('/allclear') #/allclearにアクセスしたら、allclear.htmlを返す
+@app.route('/allclear')
 def allclear():
-    return render_template('allclear.html')
+    # AllClear時は最終ステージ（例：4）として処理
+    stage = '4'
+    username = session.get('username', '匿名')
 
-@app.route('/end') #/endにアクセスしたら、end.htmlを返す
+    start_key = f'stage{stage}_start'
+    start_time = session.get(start_key)
+    if start_time:
+        elapsed = round(time.time() - start_time, 2)
+    else:
+        elapsed = 0.0
+
+    # ランキング読み込み
+    if os.path.exists(RANKING_FILE):
+        with open(RANKING_FILE, 'r', encoding='utf-8') as f:
+            try:
+                ranking = json.load(f)
+            except json.JSONDecodeError:
+                ranking = []
+    else:
+        ranking = []
+
+    # 新記録を追加（日時も追加）
+    entry = {
+        'name': username,
+        'stage': stage,
+        'time': elapsed,
+        'datetime': time.strftime('%Y-%m-%d %H:%M:%S')
+    }
+    ranking.append(entry)
+
+    # ステージ順、クリア時間順にソート（全体のランキングを整列）
+    ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
+
+    # ステージ4に該当する上位5件だけを抽出
+    filtered_ranking = [r for r in ranking if r['stage'] == stage][:5]
+
+    # 全体のランキングを保存（上書き）
+    with open(RANKING_FILE, 'w', encoding='utf-8') as f:
+        json.dump(ranking, f, ensure_ascii=False, indent=2)
+
+    # allclear.html に必要なデータを渡す
+    return render_template('allclear.html', elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
+
+
+@app.route('/end')
 def end():
     return render_template('end.html')
 
-#/shutdownにend.htmlからPOSTでアクセスされたらサーバーを停止する処理を呼び出しシャットダウン中のメッセージを返す
 @app.route('/shutdown', methods=['POST'])
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'
 
-def shutdown_server(): #自分(サーバープロセス)に終了の信号を送ってサーバーを停止
+def shutdown_server():
     os.kill(os.getpid(), signal.SIGTERM)
 
-#このファイルを直接実行した時だけ、Flaskの開発用サーバーを起動する。デバッグモードを有効にしている
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
 
 
 '''
@@ -101,12 +208,12 @@ def clear(): ⇒ clearという名前の関数を作り/clearにアクセスさ�
 まとめると/clear?from_stage=2 のようにアクセスされたらそのステージ番号(ここでは2)をclear.htmlに渡して表示する
 
 ★@app.route('/shutdown', methods=['POST'])
-⇒/shutdownというURLにアクセスされたときにHTTPのPOSTメソッドで来たリクエストだけを受け付ける（GETでは動かないように制限）
-def shutdown(): ⇒  shutdownという関数を定義する。この関数は/shutdownにPOSTでアクセスされたときに呼び出される
-    shutdown_server()  ⇒この関数が呼ばれると Flaskサーバーが止まる
+⇒/shutdownというURLにアクセスされたときにHTTPのPOSTメソッドで来たリクエストだけを受け付ける(GETでは動かないように制限）
+def shutdown(): ⇒ shutdownという関数を定義する(この関数は/shutdownにPOSTでアクセスされたときに呼び出される)
+    shutdown_server()  ⇒ この関数が呼ばれると Flaskサーバーが止まる
     shutdown(): の中のshutdown_server()
 
-★def shutdown_server(): #自分(サーバープロセス)に終了の信号を送ってサーバーを停止
+★def shutdown_server(): ⇒ 自分(サーバープロセス)に終了の信号を送ってサーバーを停止
     os.kill(os.getpid(), signal.SIGTERM)
     os.getpid()は「今動いている自分のプロセスのID」を取得(Flask)アプリそのもののID
     signal.SIGTERMは「終了して」という合図（信号）

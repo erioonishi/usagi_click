@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ja">
 
 <head>
@@ -7,27 +7,79 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
-    h1.clear {
-      text-align: center;
-      margin-top: 140px;
-      font-size: 60px;
-      position: relative;
-      z-index: 10;
-    }
+ h1.clear {
+    text-align: center;
+    margin-top: 40px;      /* 元140px → 60pxに縮小 */
+    font-size: 30px;       /* 元60px → 40pxに縮小 */
+    position: relative;
+    z-index: 10;
+  }
     #btns {
-      margin-top: 60px;
+      margin-top: 30px;
       text-align: center;
     }
     form {
       display: inline-block;
       margin: 0 15px;
     }
+    #ranking {
+      font-weight: bold;
+      width: 700px;
+      margin: 30px auto;
+      font-family: 'Yomogi', cursive;
+    }
+    #ranking table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #ranking th, #ranking td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    #ranking th {
+      background-color: #f0e68c;
+    }
+  p.clear-time {
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;       /* 元22px → 18pxに縮小 */
+    margin-top: 8px;
+  }
   </style>
 </head>
 
 <body>
   <div id="game-wrapper">
-    <h1 class="clear">Clear!!</h1>
+    <h1 class="clear">{{ session.username or '匿名' }}さん、ステージ{{ from_stage }}のクリアお疲れさま！</h1>
+    <p class="clear-time">クリア時間：{{ elapsed }} 秒</p>
+
+    <div id="ranking">
+      <h2 style="text-align:center;">ランキング（上位10件）</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>順位</th>
+            <th>名前</th>
+            <th>ステージ</th>
+            <th>クリア時間（秒）</th>
+            <th>日時</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in ranking[:5] %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.stage }}</td>
+            <td>{{ record.time }}</td>
+            <td>{{ record.datetime or '' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
     <div id="btns">
       <form action="/next_stage" method="post">
         <input type="hidden" name="from_stage" value="{{ from_stage }}">

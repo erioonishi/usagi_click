@@ -1,6 +1,5 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ja">
-
 <head>
   <meta charset="UTF-8" />
   <title>All Clear画面</title>
@@ -10,21 +9,42 @@
     h1.allclear {
       text-align: center;
       font-size: 60px;
-
+      margin-top: 20px;
     }
-
     p.all_clearcomment {
-      margin-top: 140px;
-      margin-left: 150px;
+      margin-top: 20px;
+      text-align: center;
       font-size: 30px;
       font-weight: bold;
     }
-
-    #btns {
-      margin-top: 60px;
+    p.clear-time {
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+      margin-top: 8px;
+    }
+    #ranking {
+      font-weight: bold;
+      width: 700px;
+      margin: 30px auto;
+      font-family: 'Yomogi', cursive;
+    }
+    #ranking table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #ranking th, #ranking td {
+      border: 1px solid #ccc;
+      padding: 8px;
       text-align: center;
     }
-
+    #ranking th {
+      background-color: #f0e68c;
+    }
+    #btns {
+      margin-top: 40px;
+      text-align: center;
+    }
     form {
       display: inline-block;
       margin: 0 15px;
@@ -36,6 +56,32 @@
   <div id="game-wrapper">
     <p class="all_clearcomment">すごい！！</p>
     <h1 class="allclear">ALL Clear！</h1>
+    <p class="clear-time">トータルクリア時間：{{ elapsed }} 秒</p>
+
+    <div id="ranking">
+      <h2 style="text-align:center;">AllClearランキング（上位5件）</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>順位</th>
+            <th>名前</th>
+            <th>クリア時間（秒）</th>
+            <th>日時</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in ranking %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.time }}</td>
+            <td>{{ record.datetime or '' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
     <div id="btns">
       <form action="/stage1" method="get">
         <button type="submit">もう一度最初からする？</button>
@@ -46,5 +92,4 @@
     </div>
   </div>
 </body>
-
 </html>
