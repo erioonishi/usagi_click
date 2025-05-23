@@ -8,6 +8,7 @@ import json
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # セッション利用のための秘密鍵
 
+
 # ランキングJSONファイルのパス（同じフォルダに置く想定）
 RANKING_FILE = 'ranking.json'
 
