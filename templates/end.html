@@ -6,6 +6,7 @@
   <title>終了画面</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     h1.end {
       font-size: 30px;
@@ -85,6 +86,12 @@
           window.close();
         });
     });
+  </script>
+  <script>
+    const bgm = new Audio("{{ url_for('static', filename='sounds/music.wav') }}");
+    bgm.loop = true;
+    bgm.volume = 0.2;
+    bgm.play();
   </script>
 </body>
 

@@ -4,123 +4,136 @@
 <head>
   <meta charset="UTF-8">
   <title>うさちゃんクリック練習</title>
+  <!-- Flaskテンプレート構文でstatic/style.cssというCSSファイルを読み込み -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     
-    h1.top {
+    h1.top {/*タイトルに対して*/
       text-align: center;
       margin: 50px 0 0 0;
       font-size: 50px;
     }
 
-    p.top_setumei {
+    p.top_setumei {/*説明文に対して*/
       text-align: center;
   
       font-size: 22px;
       font-weight: bold;
     }
 
-    .img-container {
+    .img-container {/*うさちゃんとにんじんの画像を並べるエリア*/
       display: flex;
       justify-content: center;
       gap: 20px;
       margin-top: 30px;
     }
 
-    .sway-container {
+/*===============================
+★今は使ってないけどうさちゃんの下に名前を入れるなどの時に有効な縦の設定
+    .sway-container {   ⇒画像1つずつを縦中央に配置するためのラッパー
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: column;　　　⇒縦方向のレイアウト
+      align-items: center;　　　⇒中央揃え
+    } 
+===============================*/
+
+    .sway {/*ゆらゆら動くアニメーションを適用するクラス*/
+      transform-origin: bottom center;/* 足元を起点に回転 */
+      animation: swayLeftRight 3s ease-in-out infinite;/* 下に追記】*/
     }
 
-    .sway {
-      transform-origin: bottom center;
-      animation: swayLeftRight 3s ease-in-out infinite;
+    @keyframes swayLeftRight {/*左右に3度ずつゆっくり回転するアニメーション*/
+      0% { transform: rotate(-3deg); }/*0%: -3度*/
+      50% { transform: rotate(3deg); }/*50%: +3度*/
+      100% { transform: rotate(-3deg); }/*100%: -3度*/
     }
 
-    @keyframes swayLeftRight {
-      0% { transform: rotate(-3deg); }
-      50% { transform: rotate(3deg); }
-      100% { transform: rotate(-3deg); }
-    }
-
-    img {
+    img {/*すべての画像に*/
       width: 200px;
       height: 200px;
       vertical-align: middle;
     }
-button{
-  margin: 0 auto;
-}
-    #start-btn {
+
+    button{/*style.cssにあるけどここだけ変えたいから強制的に記述*/
+      margin: 0 auto;
+    }
+
+    #start-btn {/*スタートボタンの見た目*/
       padding: 10px 20px;
       font-size: 20px;
-      
       cursor: pointer;
       font-family: 'Yomogi', sans-serif;
     }
 
-    form {
+    form {/*フォーム全体を中央揃え*/
       text-align: center;
     }
 
-    #username {
-      font-size: 20px;
-      padding: 10px;
-      margin-top: 20px;
-    }
-
-    label {
+    label {/*お名前を入力してくださいとBOX*/
       font-size: 18px;
       display: block;
       margin-top: 10px;
     }
 
-input#username {
-  width: 100%;
-  max-width: 180px;
-  padding: 10px 12px;
-  font-size: 18px;
-  border: 2px solid #e6b800;  /* 優しい黄色ボーダー */
-  border-radius: 8px;
-  box-sizing: border-box;
-  outline-color: #be9902;
-  font-family: 'Yomogi', cursive;
-}
-label[for="username"] input[type="text"] {
-  margin-left: 20px;  /* 文字と入力欄の間に20pxの隙間 */
-}
-label[for="username"]{
-  font-size: 18px;
-  font-weight: bold;
-}
+    input#username {/*入力BOX*/
+      width: 100%;
+      max-width: 180px;
+      padding: 10px 12px;
+      font-size: 18px;
+      border: 2px solid #e6b800;  /*優しい黄色ボーダー*/
+      border-radius: 8px;
+      box-sizing: border-box;
+      outline-color: #be9902; /*入力のため選択すると色変更*/
+      font-family: 'Yomogi', cursive;
+      margin-top: 20px;
+    }
+
+    label[for="username"] input[type="text"] {
+      margin-left: 20px;  /* 文字と入力欄の間に20pxの隙間 */
+    }
+
+    label[for="username"]{/*お名前を入力してくださいのとこ*/
+      font-size: 18px;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 
 <body>
-  <div id="game-wrapper">
+  <div id="game-wrapper"><!--ゲーム画面全体のラッパー-->
     <h1 class="top">うさちゃんクリック練習</h1>
     <p class="top_setumei">うさちゃんと一緒にクリックやドラッグの練習を頑張りましょう</p>
 
-    <div class="img-container">
-      <div class="sway-container">
+    <div class="img-container"><!--画像を横に並べるコンテナ-->
+      <div class="sway-container"><!--左側の画像：うさちゃん アニメーション付きでゆらゆら-->
         <img class="sway" src="{{ url_for('static', filename='images/usagi.png') }}" alt="うさちゃん">
       </div>
-      <div class="sway-container">
+      <div class="sway-container"><!--右側の画像：にんじん。同様にゆらゆら-->
         <img class="sway" src="{{ url_for('static', filename='images/ninjin.png') }}" alt="にんじん">
       </div>
     </div>
 
     <!-- 名前入力フォームを追加 -->
     <form action="/start" method="post">
+      <!--@app.route('/start', methods=['POST']) にお願いして名前受け取って/stage1 に遷移--> 
       <label for="username">お名前を入力してください<input type="text" id="username" name="username" required></label>
-      
       <br>
       <button id="start-btn" type="submit">スタート</button>
     </form>
 
   </div>
+ <script>//スタート画面のBGM
+    const bgm = new Audio("{{ url_for('static', filename='sounds/music.wav') }}");
+    bgm.loop = true;
+    bgm.volume = 0.2; //0.0～1.0の間で音量
+    bgm.play();
+  </script>
+</body>
+</html>
+
 </body>
 
 </html>

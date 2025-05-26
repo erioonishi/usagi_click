@@ -5,19 +5,14 @@
   <title>All Clear画面</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
-    
     h1.allclear {
       text-align: center;
       font-size: 60px;
-      margin-top: 20px;
+      margin: 20px 0 10px 0;
     }
-    p.all_clearcomment {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 30px;
-      font-weight: bold;
-    }
+
     p.clear-time {
       font-weight: bold;
       text-align: center;
@@ -27,7 +22,7 @@
     #ranking {
       font-weight: bold;
       width: 700px;
-      margin: 30px auto;
+      margin: 20px auto;
       font-family: 'Yomogi', cursive;
     }
     #ranking table {
@@ -43,7 +38,6 @@
       background-color: #f0e68c;
     }
     #btns {
-      margin-top: 40px;
       text-align: center;
     }
     form {
@@ -55,12 +49,11 @@
 
 <body>
   <div id="game-wrapper">
-    <p class="all_clearcomment">すごい！！</p>
     <h1 class="allclear">ALL Clear！</h1>
-    <p class="clear-time">トータルクリア時間：{{ elapsed }} 秒</p>
+    <p class="clear-time">クリア時間：{{ elapsed }} 秒</p>
 
     <div id="ranking">
-      <h2 style="text-align:center;">AllClearランキング（上位5件）</h2>
+      <h2 style="text-align:center;">ステージ4ランキング（上位5件）</h2>
       <table>
         <thead>
           <tr>
@@ -92,5 +85,12 @@
       </form>
     </div>
   </div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const clearAudio = new Audio("{{ url_for('static', filename='sounds/clear.wav') }}");
+    clearAudio.volume = 0.5;
+    clearAudio.play();
+  });
+</script>
 </body>
 </html>

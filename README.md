@@ -44,6 +44,7 @@
 
 ![うさちゃんクリック１デモ](static/images/usachandouga1.gif)
 ![うさちゃんクリック２デモ](static/images/usachandouga2.gif)
+![うさちゃんクリック２デモ](static/images/usachandouga3.gif)
 
 ## ⚙️ 技術スタック（Tech Stack）
 

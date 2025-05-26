@@ -6,6 +6,7 @@
   <title>ステージ3：かばんに入れよう</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     body {
 
@@ -38,39 +39,48 @@
   </div>
 
   <script>
-    const container = document.getElementById('container');
-    let count = 0;
+  const container = document.getElementById('container');
+  let count = 0;
 
-    for (let i = 0; i < 3; i++) {
-      const img = document.createElement('img');
-      img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
-      img.className = 'carrot';
-      const baseLeft = 435;  // 横の開始位置はそのまま
-      const spacing = 110;   // にんじん幅100px + 間隔10px
-      img.style.left = (baseLeft + i * spacing) + 'px';
-      img.style.top = '270px';  // ちょっと下げた
-      img.draggable = true;
-      img.ondragstart = e => {
-        e.dataTransfer.setData('text/plain', i);
-        e.target.id = 'dragging';
-      };
-      container.appendChild(img);
-    }
+  // ★ 音声オブジェクトを作成
+  const kabanSound = new Audio("{{ url_for('static', filename='sounds/kaban.wav') }}");
+  kabanSound.volume = 0.2;
 
-    const bag = document.getElementById('bag');
-    bag.ondragover = e => e.preventDefault();
-    bag.ondrop = e => {
-      e.preventDefault();
-      const dragging = document.getElementById('dragging');
-      if (dragging) {
-        dragging.remove();
-        count++;
-        if (count >= 3) {
-          setTimeout(() => window.location.href = "/clear?from_stage=3", 800);
-        }
-      }
+  for (let i = 0; i < 3; i++) {
+    const img = document.createElement('img');
+    img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
+    img.className = 'carrot';
+    const baseLeft = 435;
+    const spacing = 110;
+    img.style.left = (baseLeft + i * spacing) + 'px';
+    img.style.top = '270px';
+    img.draggable = true;
+    img.ondragstart = e => {
+      e.dataTransfer.setData('text/plain', i);
+      e.target.id = 'dragging';
     };
-  </script>
+    container.appendChild(img);
+  }
+
+  const bag = document.getElementById('bag');
+  bag.ondragover = e => e.preventDefault();
+  bag.ondrop = e => {
+    e.preventDefault();
+    const dragging = document.getElementById('dragging');
+    if (dragging) {
+      dragging.remove();
+
+      // ★ 音を鳴らす（再生位置を先頭にして play）
+      kabanSound.currentTime = 0;
+      kabanSound.play();
+
+      count++;
+      if (count >= 3) {
+        setTimeout(() => window.location.href = "/clear?from_stage=3", 800);
+      }
+    }
+  };
+</script>
 </body>
 
 </html>

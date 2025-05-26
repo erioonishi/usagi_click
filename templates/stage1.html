@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <title>ステージ1：にんじんもぐもぐ</title>
   <style>
     body {/*マウスポインターをうさちゃん画像に変更*/
@@ -60,7 +61,6 @@
     <script>
       const container = document.getElementById('container'); //container：にんじん配置エリア
       let current = 1; //current：今クリックすべき番号
-
       const carrots = []; //carrots：配置済みにんじんの位置記録
 
       function createCarrot(num) {//関数(にんじん1つ生成)
@@ -113,6 +113,11 @@
 
         img.onclick = () => {
           if (parseInt(img.dataset.num) === current) {
+            // クリック音を鳴らす
+            const paku = document.getElementById("paku-sound");
+            paku.currentTime = 0; // 最初から再生
+            paku.play();
+            paku.volume = 0.5;  // 音量を50%に
             img.src = "{{ url_for('static', filename='images/ninjin2.png') }}";
             current++; //順番どおりに押したら画像を変えて次へ
             if (current > 5) {
@@ -131,6 +136,7 @@
       }
     </script>
   </div>
+  <audio id="paku-sound" src="{{ url_for('static', filename='sounds/paku.wav') }}" preload="auto"></audio>
 </body>
 
 </html>

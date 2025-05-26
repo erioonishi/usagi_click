@@ -6,6 +6,7 @@
   <title>ステージ4：うさちゃんお家へ帰る</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     #game-wrapper {
       /* ここだけ上に文章があるので無理やり上書き */
@@ -42,140 +43,160 @@
   <div id="game-wrapper">
     <canvas id="gameCanvas" width="800" height="600"></canvas>
   </div>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
 
-  <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
+  const michiImg = new Image();
+  const houseImg = new Image();
+  const usagiImg = new Image();
+  const audio = new Audio("{{ url_for('static', filename='sounds/tokotoko.wav') }}"); // ← 音声ファイルの読み込み
+  audio.volume = 0.3; // ← ここで音量調整
 
-    const michiImg = new Image();
-    const houseImg = new Image();
-    const usagiImg = new Image();
+  let soundInterval = null; // ← 音再生用のタイマーID
 
-    michiImg.src = "{{ url_for('static', filename='images/michi.png') }}";
-    houseImg.src = "{{ url_for('static', filename='images/house.png') }}";
-    usagiImg.src = "{{ url_for('static', filename='images/usagi.png') }}";
+  michiImg.src = "{{ url_for('static', filename='images/michi.png') }}";
+  houseImg.src = "{{ url_for('static', filename='images/house.png') }}";
+  usagiImg.src = "{{ url_for('static', filename='images/usagi.png') }}";
 
-    let imagesLoaded = 0;
-    function onImageLoad() {
-      imagesLoaded++;
-      if (imagesLoaded === 3) {
-        initGame();
-      }
+  let imagesLoaded = 0;
+  function onImageLoad() {
+    imagesLoaded++;
+    if (imagesLoaded === 3) {
+      initGame();
     }
+  }
 
-    michiImg.onload = onImageLoad;
-    houseImg.onload = onImageLoad;
-    usagiImg.onload = onImageLoad;
+  michiImg.onload = onImageLoad;
+  houseImg.onload = onImageLoad;
+  usagiImg.onload = onImageLoad;
 
-    let usagiX = 710;
-    let usagiY = 520;
-    const usagiSize = 48;
-    const houseX = 20;
-    const houseY = 20;
-    const houseWidth = 100;
-    const houseHeight = 100;
+  let usagiX = 710;
+  let usagiY = 520;
+  const usagiSize = 48;
+  const houseX = 20;
+  const houseY = 20;
+  const houseWidth = 100;
+  const houseHeight = 100;
 
-    let dragging = false;
-    let offsetX, offsetY;
-    let pathPixels;
+  let dragging = false;
+  let offsetX, offsetY;
+  let pathPixels;
 
-    function initGame() {
-      ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
-      pathPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      drawScene();
-      drawUsagi(usagiX, usagiY);
+  function initGame() {
+    ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+    pathPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    drawScene();
+    drawUsagi(usagiX, usagiY);
+  }
+
+  function drawScene() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(houseImg, houseX, houseY, houseWidth, houseHeight);
+  }
+
+  function drawUsagi(x, y) {
+    ctx.drawImage(usagiImg, x, y, usagiSize, usagiSize);
+  }
+
+  function isOnPath(x, y) {
+    if (!pathPixels) return false;
+    const px = Math.floor(x);
+    const py = Math.floor(y);
+    if (px < 0 || py < 0 || px >= canvas.width || py >= canvas.height) return false;
+    if (
+      x >= houseX &&
+      x <= houseX + houseWidth &&
+      y >= houseY &&
+      y <= houseY + houseHeight
+    ) {
+      return true;
     }
+    const idx = (py * canvas.width + px) * 4;
+    const r = pathPixels.data[idx];
+    const g = pathPixels.data[idx + 1];
+    const b = pathPixels.data[idx + 2];
+    return (r >= 250 && g >= 250 && b >= 250);
+  }
 
-    function drawScene() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
-      ctx.drawImage(houseImg, houseX, houseY, houseWidth, houseHeight);
+  function startSoundLoop() {
+    if (!soundInterval) {
+      audio.play();
+      soundInterval = setInterval(() => {
+        audio.currentTime = 0;
+        audio.play();
+      }, 500);
     }
+  }
 
-    function drawUsagi(x, y) {
-      ctx.drawImage(usagiImg, x, y, usagiSize, usagiSize);
+  function stopSoundLoop() {
+    clearInterval(soundInterval);
+    soundInterval = null;
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    if (mx >= usagiX && mx <= usagiX + usagiSize && my >= usagiY && my <= usagiY + usagiSize) {
+      dragging = true;
+      offsetX = mx - usagiX;
+      offsetY = my - usagiY;
+      canvas.classList.add('dragging');
+      startSoundLoop(); // ★ ドラッグ開始時に音再生開始
     }
+  });
 
-    function isOnPath(x, y) {
-      if (!pathPixels) return false;
-      const px = Math.floor(x);
-      const py = Math.floor(y);
-      if (px < 0 || py < 0 || px >= canvas.width || py >= canvas.height) return false;
-      // 家の座標範囲内ならOK（白くなくても成功とみなす）
-      if (
-        x >= houseX &&
-        x <= houseX + houseWidth &&
-        y >= houseY &&
-        y <= houseY + houseHeight
-      ) {
-        return true;
-      }
-      const idx = (py * canvas.width + px) * 4;
-      const r = pathPixels.data[idx];
-      const g = pathPixels.data[idx + 1];
-      const b = pathPixels.data[idx + 2];
-      return (r >= 250 && g >= 250 && b >= 250);
-    }
+  canvas.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    let newX = mx - offsetX + usagiSize / 2;
+    let newY = my - offsetY + usagiSize / 2;
 
-    canvas.addEventListener('mousedown', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      if (mx >= usagiX && mx <= usagiX + usagiSize && my >= usagiY && my <= usagiY + usagiSize) {
-        dragging = true;
-        offsetX = mx - usagiX;
-        offsetY = my - usagiY;
-        canvas.classList.add('dragging');
-      }
-    });
-
-    canvas.addEventListener('mousemove', (e) => {
-      if (!dragging) return;
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      let newX = mx - offsetX + usagiSize / 2;
-      let newY = my - offsetY + usagiSize / 2;
-
-      // ✅ ここで道から外れたら即アウト！
-      if (!isOnPath(newX, newY)) {
-        dragging = false;
-        canvas.classList.remove('dragging');
-        window.location.href = "/continue";
-        return;
-      }
-
-      // ⭕道の上にいるなら動かす
-      usagiX = mx - offsetX;
-      usagiY = my - offsetY;
-      drawScene();
-      drawUsagi(usagiX, usagiY);
-    });
-
-    canvas.addEventListener('mouseup', () => {
-      if (!dragging) return;
+    if (!isOnPath(newX, newY)) {
       dragging = false;
       canvas.classList.remove('dragging');
-      if (
-        usagiX + usagiSize > houseX &&
-        usagiX < houseX + houseWidth &&
-        usagiY + usagiSize > houseY &&
-        usagiY < houseY + houseHeight
-      ) {
-        window.location.href = "/allclear";
-      } else {
-        window.location.href = "/continue";
-      }
-    });
+      stopSoundLoop(); // ★ 離れたら音停止
+      window.location.href = "/continue";
+      return;
+    }
 
-    canvas.addEventListener('mouseleave', () => {
-      if (dragging) {
-        dragging = false;
-        canvas.classList.remove('dragging');
-        window.location.href = "/continue";
-      }
-    });
-  </script>
+    usagiX = mx - offsetX;
+    usagiY = my - offsetY;
+    drawScene();
+    drawUsagi(usagiX, usagiY);
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    canvas.classList.remove('dragging');
+    stopSoundLoop(); // ★ ドラッグ終了時に音停止
+    if (
+      usagiX + usagiSize > houseX &&
+      usagiX < houseX + houseWidth &&
+      usagiY + usagiSize > houseY &&
+      usagiY < houseY + houseHeight
+    ) {
+      window.location.href = "/allclear";
+    } else {
+      window.location.href = "/continue";
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    if (dragging) {
+      dragging = false;
+      canvas.classList.remove('dragging');
+      stopSoundLoop(); // ★ マウス外れたら音停止
+      window.location.href = "/continue";
+    }
+  });
+</script>
+
 
 </body>
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ログイン</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
+    .login-container {
+      width: 400px;
+      margin: 100px auto 0;
+    }
+
+    .login-box {
+      background-color: #def69b;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      font-family: 'Yomogi', cursive;
+    }
+
+    .login-box h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-box form {
+      text-align: center;
+    }
+
+    .login-box label {
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .login-box input[type="password"] {
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 10px;
+      font-size: 18px;
+      border: 2px solid #e6b800;
+      border-radius: 8px;
+      outline-color: #be9902;
+      font-family: 'Yomogi', cursive;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    .error-msg {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    p.PW{
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+    }
+ 
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1>ログイン</h1>
+      {% if error %}
+        <p class="error-msg">{{ error }}</p>
+      {% endif %}
+      <form method="POST">
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">ログイン</button>
+      </form>
+      <p class="PW">今回のPWは「usa」だよ🐰</p>
+    </div>
+  </div>
+</body>
+</html>

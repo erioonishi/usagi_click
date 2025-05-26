@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="ja">
 
 <head>
@@ -6,8 +6,8 @@
   <title>Clear画面</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
-    
  h1.clear {
     text-align: center;
     margin-top: 40px;      /* 元140px → 60pxに縮小 */
@@ -91,6 +91,20 @@
       </form>
     </div>
   </div>
+
+  <!-- クリア音 -->
+  <audio id="clear-sound" src="{{ url_for('static', filename='sounds/clear.wav') }}" preload="auto"></audio>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const clearSound = document.getElementById('clear-sound');
+      clearSound.volume = 0.5;
+      clearSound.play().catch(e => {
+        console.log('自動再生が制限されています:', e);
+      });
+    });
+  </script>
+
 </body>
 
 </html>

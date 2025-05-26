@@ -6,6 +6,7 @@
   <title>ステージ2：にんじん収穫</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
     #game-wrapper {
       cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
@@ -42,6 +43,9 @@
   <script>
     const wrapper = document.getElementById('game-wrapper');
     const titleText = document.getElementById('title-text');
+    //ステージ2は2回クリックで1回の音声鳴らすからnew Audio(...)のほうが管理がラク
+    const syuukaku = new Audio("{{ url_for('static', filename='sounds/syuukaku.wav') }}");
+    syuukaku.volume = 0.5; // お好みで音量調整
     let count = 0;
 
     function createCarrot() {
@@ -52,15 +56,12 @@
 
       img.onload = () => {
         const carrotWidth = 60;
-        // 画像のアスペクト比を保って高さを計算
         const carrotHeight = img.naturalHeight * (carrotWidth / img.naturalWidth);
 
         const maxX = wrapper.clientWidth - carrotWidth;
-        // タイトル部分の高さを引いた範囲に制限（はみ出し防止）
         const maxY = wrapper.clientHeight - carrotHeight - titleText.clientHeight;
 
         const x = Math.random() * maxX;
-        // Yはタイトル領域の下からランダム配置
         const y = Math.random() * maxY + titleText.clientHeight;
 
         img.style.left = x + 'px';
@@ -68,6 +69,8 @@
       };
 
       img.ondblclick = () => {
+        syuukaku.currentTime = 0;
+        syuukaku.play(); // ← ダブルクリック時に1回だけ鳴らす
         img.remove();
         count++;
         if (count >= 10) {
