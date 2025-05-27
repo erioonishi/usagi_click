@@ -8,91 +8,90 @@
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <title>ステージ1：にんじんもぐもぐ</title>
   <style>
-    body {/*マウスポインターをうさちゃん画像に変更*/
+    body {/*マウスポインターをうさちゃん画像に変更(20 20はカーソルのクリック位置の調整)*/
       cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
       auto;
     }
 
     .carrot {/*にんじんも同じカーソルにして、テキスト選択できないように*/
-      cursor: inherit;
+      cursor: inherit; /*inherit⇒親の要素と同じにする*/
       user-select: none;
     }
+    /*画面全体のカーソルをうさぎの画像に変えているけどにんじんの画像の上にカーソルが乗った時もそのまま同じうさぎの画像カーソルを使うってこと
+      普通は、画像の上だとカーソルが変わったりすることもあるからそれを防いでいる*/
 
-    .carrot-wrapper {/*にんじんを好きな位置に配置し、中央揃えするための外枠*/
+    .carrot-wrapper {/*にんじんを包む外枠の位置を自由に絶対配置できるようにして、文字(数字)を中央揃えに*/
       position: absolute;
       text-align: center;
     }
 
-    .carrot-label {
+    .carrot-label {/*にんじん画像のすぐ上に数字ラベルを表示するためのスタイル*/
       position: absolute;
-      bottom: 100%;
-      /* にんじん画像の真上に固定 */
-      left: 50%;
-      transform: translateX(-50%) translateY(-6px);
-      /* 中央揃え＆少し上にずらす */
+      bottom: 100%;/*にんじん画像のちょうど真上にラベルを置く100%はにんじん画像の高さぶんだけ上にずらすという意味*/
+      left: 50%;/*ラベルの左端をにんじんのちょうど中央あたりに合わせる*/
+      transform: translateX(-50%) translateY(-6px);/*中央揃え＆少し上にずらす*/
       font-weight: bold;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.95);/*ラベルの背景にほぼ白(すこし透明)の色*/
       font-size: 22px;
-      /* 少し大きく */
       padding: 4px 8px;
       border-radius: 12px;
       line-height: 1;
-      white-space: nowrap;
-      pointer-events: none;
-      /* 数字部分クリックでにんじんの反応を邪魔しないように */
+      white-space: nowrap;/*数字が途中で改行されないように*/
+      pointer-events: none;/*ラベルはクリックのじゃまをしないようにマウスの反応を無効*/
     }
 
     #container {
-      position: relative;
+      position: relative;/*子要素(にんじん)を自由な位置に置けるようにするための土台(基準)*/
       width: 800px;
       height: 600px;
-      margin: 0 auto;
-      overflow: hidden;
+      margin: 0 auto;/*左右の余白を自動で設定して画面の真ん中に表示*/
+      overflow: hidden;/*中の要素がはみ出した場合に、見えないように切り取る(出ないように設定してるけど)*/
 
     }
   </style>
 </head>
 
 <body>
-  <div id="game-wrapper">
+  <div id="game-wrapper"><!--ゲーム全体を包むボックス-->
     <h1 style="text-align:center;">にんじんを順番にクリック！</h1>
-    <div id="container"></div>
+    <div id="container"></div><!--にんじんたちが出てくるゲームのエリア-->
 
     <script>
       const container = document.getElementById('container'); //container：にんじん配置エリア
-      let current = 1; //current：今クリックすべき番号
-      const carrots = []; //carrots：配置済みにんじんの位置記録
+      let current = 1; //current：今クリックすべき番号(次にクリックするにんじんの番号を記録する変数)
+      const carrots = []; //carrots：配置済みにんじんの位置記録(にんじんの配置場所を記録するためのリスト)
 
       function createCarrot(num) {//関数(にんじん1つ生成)
         const wrapper = document.createElement('div');
-        wrapper.className = 'carrot-wrapper'; //にんじん全体を囲むdivを作る
+        wrapper.className = 'carrot-wrapper'; //にんじん全体を囲むdivを作る(にんじんに表示する番号)
 
-        const label = document.createElement('div');
-        label.className = 'carrot-label';
-        label.textContent = num; //数字ラベルのdivを作る(例：1, 2, 3...)
+        //このにんじんは○番目という数字のラベルを作る
+        const label = document.createElement('div');//数字ラベルを表示するための箱のdiv
+        label.className = 'carrot-label';//divに「carrot-label」というクラス名(css用)
+        label.textContent = num; //数字ラベルのdivを作る(例：1, 2, 3...)順番の番号を表示
 
         const img = document.createElement('img');
         img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
         img.className = 'carrot'; //にんじん画像を作成
 
-        const isLarge = Math.random() > 0.5;
-        const carrotSize = isLarge ? 80 : 50; //ランダムで大きい or 小さいにんじんに
-        img.style.width = carrotSize + "px";
-        img.dataset.num = num; //サイズを設定してデータ属性numに順番を記録
+        const isLarge = Math.random() > 0.5; //0～1のランダムな数を出して、0.5より大きいかをチェック(約50%の確率で大きいにんじんする)
+        const carrotSize = isLarge ? 80 : 50; //ランダムで大きい or 小さいにんじんに(isLargeがtrueなら80px、そうでなければ50px)
+        img.style.width = carrotSize + "px"; //にんじん画像の横幅を指定したサイズに設定
+        img.dataset.num = num; //サイズを設定してデータ属性numに順番を記録(クリックされたときに順番通りかチェック)
 
-        // 配置位置を決定（重なりを避ける）
-        let x, y, tries = 0;
+        //位置やサイズの準備
+        let x, y, tries = 0;//にんじんの表示位置(x, y)を決める変数と何回配置を試したか数えるtriesを用意
         const margin = 50; // 画面端とにんじんの間に余白を持たせる
-        const labelHeight = 20;
-        const wrapperWidth = carrotSize;
-        const wrapperHeight = carrotSize + labelHeight + 2;
+        const labelHeight = 20;//にんじんの上に付いている番号ラベルの高さは20px
+        const wrapperWidth = carrotSize;//にんじん全体を包む枠(wrapper)の横幅は、にんじんのサイズと同じ
+        const wrapperHeight = carrotSize + labelHeight + 2;// wrapperの高さは、にんじんの高さ＋番号ラベル＋少しだけ余白(2px)
 
         do { //ランダムな位置を探して他のにんじんと重ならないかチェック
-          x = Math.random() * (800 - wrapperWidth - margin * 2) + margin; //ランダム位置
+          x = Math.random() * (800 - wrapperWidth - margin * 2) + margin; //ランダム位置【下に追記】
           y = Math.random() * (600 - wrapperHeight - margin * 2) + margin;
 
           // 重なり判定（他のにんじんと）
-          var overlapping = carrots.some(c => {// overlapping⇒他のにんじんと重なってないかチェック
+          var overlapping = carrots.some(c => {//overlapping⇒他のにんじんと重なってないかチェック【下に追記】
             return !(
               x + wrapperWidth < c.x ||
               x > c.x + c.width ||
@@ -103,21 +102,22 @@
 
           tries++;
           if (tries > 100) break; //100回以上やってもうまくいかなければあきらめる
-        } while (overlapping);
+        } while (overlapping); //overlappingがtrue(重なってる)なら、もう一度ランダムな位置を探す、false(重なってない)になったら配置決定
 
-        wrapper.style.left = `${x}px`;
+        //決まった位置ににんじんを配置
+        wrapper.style.left = `${x}px`;//変数xの値に"px"をくっつけて文字列にする
         wrapper.style.top = `${y}px`;
 
-        // 配置記録
+        //配置記録
         carrots.push({ x, y, width: wrapperWidth, height: wrapperHeight });
 
         img.onclick = () => {
           if (parseInt(img.dataset.num) === current) {
-            // クリック音を鳴らす
+            //クリック音を鳴らす
             const paku = document.getElementById("paku-sound");
-            paku.currentTime = 0; // 最初から再生
+            paku.currentTime = 0; //最初から再生
             paku.play();
-            paku.volume = 0.5;  // 音量を50%に
+            paku.volume = 0.5;  //音量を50%に
             img.src = "{{ url_for('static', filename='images/ninjin2.png') }}";
             current++; //順番どおりに押したら画像を変えて次へ
             if (current > 5) {
@@ -126,6 +126,7 @@
           }
         };
 
+        //ラベルと画像を組み合わせて、画面に追加
         wrapper.appendChild(label);
         wrapper.appendChild(img);
         container.appendChild(wrapper);
@@ -136,12 +137,33 @@
       }
     </script>
   </div>
+  <!--食べたときの「ぱくっ」音のファイルを事前に読み込んでおく-->
   <audio id="paku-sound" src="{{ url_for('static', filename='sounds/paku.wav') }}" preload="auto"></audio>
 </body>
 
 </html>
 
 <!-- ===============================
+
+★x = Math.random() * (800 - wrapperWidth - margin * 2) + margin;
+x(横方向)のランダム位置を、画面の中＆余白ありで決める
+・Math.random()は0〜1のランダムな数
+・800 はゲーム画面の幅
+・wrapperWidth はにんじん(＋ラベル)の横幅
+・margin * 2は左右に余白(50×2)を確保
+・+ marginで左端に寄りすぎないよう調整
+
+★ var overlapping = carrots.some(c => {
+⇒carrotsはすでに配置したにんじんたちの位置情報で、.some()は1つでも条件を満たすものがあればtrueになり、cはそれぞれのにんじんの座標とサイズを表してる
+            return !(
+              x + wrapperWidth < c.x ||　⇒右端が左すぎる（つまり左にある）
+              x > c.x + c.width ||　⇒左端が右すぎる
+              y + wrapperHeight < c.y ||　⇒下が上すぎる
+              y > c.y + c.height　⇒上が下すぎる
+            );
+          });
+これらのどれかがtrueなら ⇒ 重なってない！
+だから!()でそれを否定 ⇒ 重なってたらtrue
 
 ★★コメントなしのコードが必要な場合★★
 <!DOCTYPE html>
@@ -172,20 +194,16 @@
     .carrot-label {
       position: absolute;
       bottom: 100%;
-      /* にんじん画像の真上に固定 */
       left: 50%;
       transform: translateX(-50%) translateY(-6px);
-      /* 中央揃え＆少し上にずらす */
       font-weight: bold;
       background: rgba(255, 255, 255, 0.95);
       font-size: 22px;
-      /* 少し大きく */
       padding: 4px 8px;
       border-radius: 12px;
       line-height: 1;
       white-space: nowrap;
       pointer-events: none;
-      /* 数字部分クリックでにんじんの反応を邪魔しないように */
     }
 
     #container {
@@ -229,7 +247,7 @@
 
         // 配置位置を決定（重なりを避ける）
         let x, y, tries = 0;
-        const margin = 50; // 画面端とにんじんの間に余白を持たせる
+        const margin = 50;
         const labelHeight = 20;
         const wrapperWidth = carrotSize;
         const wrapperHeight = carrotSize + labelHeight + 2;
@@ -249,7 +267,7 @@
           });
 
           tries++;
-          if (tries > 100) break; // 試行回数が多すぎたら諦める
+          if (tries > 100) break;
         } while (overlapping);
 
         wrapper.style.left = `${x}px`;

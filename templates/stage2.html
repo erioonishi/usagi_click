@@ -17,7 +17,123 @@
       position: relative;
       width: 800px;
       height: 540px;
-      /* h1の高さ分を空けて重ならないように */
+      /*h1の高さ分を空けて重ならないように*/
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .carrot {
+      position: absolute;
+      width: 60px;
+      cursor: inherit;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="game-wrapper">
+    <div id="title-text">
+      <h1>にんじんをダブルクリックで収穫！</h1>
+    </div>
+  </div>
+
+  <script>
+    const wrapper = document.getElementById('game-wrapper');//TML内の要素をJavaScriptから使えるように取得
+    const titleText = document.getElementById('title-text');
+    //ステージ2は2回クリックで1回の音声鳴らすからnew Audio(...)のほうが管理がラク
+    const syuukaku = new Audio("{{ url_for('static', filename='sounds/syuukaku.wav') }}");
+    syuukaku.volume = 0.5; //お好みで音量調整
+    let count = 0; //収穫できたにんじんの数を数えるための変数
+
+    function createCarrot() {//にんじんを1つ作る関数で10回呼び出す
+      const img = document.createElement('img');
+      img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
+      img.className = 'carrot';
+      img.style.width = '60px';
+      
+      //画像のサイズを正しく取得するため、画像が読み込まれた後の処理
+      img.onload = () => {//にんじん画像(img)が読み込まれたタイミングで、以下の処理を実行
+        const carrotWidth = 60;//にんじんの表示する幅(横サイズ)を60ピクセルに固定
+        const carrotHeight = img.naturalHeight * (carrotWidth / img.naturalWidth);//【下に追記】
+
+        //にんじんが画面からはみ出さないように最大X・Yを設定【下に追記】
+        const maxX = wrapper.clientWidth - carrotWidth;
+        const maxY = wrapper.clientHeight - carrotHeight - titleText.clientHeight;
+
+        //表示位置をランダムに決定
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY + titleText.clientHeight;
+
+        //実際の画像位置を設定
+        img.style.left = x + 'px';//にんじん画像の左端の位置(横方向)を、x pxのところに置く
+        img.style.top = y + 'px';//にんじん画像の上端の位置(縦方向)を、y pxのところに置く
+      };
+
+      //クリックしたときの処理
+      img.ondblclick = () => {
+        syuukaku.currentTime = 0;//収穫の音を最初から再生するために、再生位置を0秒に戻す
+        syuukaku.play(); //ダブルクリック時に1回だけ鳴らす
+        img.remove();//にんじん画像を消す(収穫！)
+        count++;//カウントを増やす
+        if (count >= 10) {//10個集めたら0.8秒後にクリア画面へ
+          setTimeout(() => window.location.href = "/clear?from_stage=2", 800);
+        }
+      };
+
+      wrapper.appendChild(img);//作ったにんじん画像を画面の中(#game-wrapperの中)に追加
+    }
+
+    for (let i = 0; i < 10; i++) {//createCarrot()を10回呼び出して10個のにんじんを表示
+      createCarrot();
+    }
+  </script>
+</body>
+
+</html>
+
+
+<!-- ===============================
+
+★const carrotHeight = img.naturalHeight * (carrotWidth / img.naturalWidth);
+元の画像の縦横比を保ったまま、高さ(縦サイズ)を計算
+・img.naturalWidth：画像の元の幅
+・img.naturalHeight：画像の元の高さ
+・carrotWidth / img.naturalWidth：表示サイズが元のサイズの何倍か(=縮小倍率)
+それを高さにもかけて、正しい縮小後の高さを出している
+
+★const maxX = wrapper.clientWidth - carrotWidth;
+にんじん画像を画面の右端にはみ出さずに表示できる最大の「横位置」を計算
+・wrapper.clientWidth：ゲーム画面(#game-wrapper)の幅(800px)
+・carrotWidth：にんじんの画像の幅(ここでは60px)
+にんじんが画面の右側にはみ出さないように800 - 60 = 740pxの範囲内で表示
+★const maxY = wrapper.clientHeight - carrotHeight - titleText.clientHeight;
+にんじんが画面の下にはみ出さず、かつ上のタイトルと重ならないように最大の「縦位置」を計算
+・wrapper.clientHeight：ゲーム画面の高さ(540px)
+・carrotHeight：にんじんの高さ(画像の比率から計算済み)
+・titleText.clientHeight：タイトル部分(「にんじんをダブルクリックで収穫！」の見出し)の高さ
+ 画面の下端や見出しと重ならないように、にんじんを置ける縦の範囲を確保
+
+★★コメントなしのコードが必要な場合★★
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ステージ2：にんじん収穫</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
+    #game-wrapper {
+      cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
+      auto;
+    }
+
+    #container {
+      position: relative;
+      width: 800px;
+      height: 540px;
       overflow: hidden;
       margin: 0 auto;
     }
@@ -37,15 +153,13 @@
       <h1>にんじんをダブルクリックで収穫！</h1>
     </div>
 
-    <!-- にんじんはここに表示 -->
   </div>
 
   <script>
     const wrapper = document.getElementById('game-wrapper');
     const titleText = document.getElementById('title-text');
-    //ステージ2は2回クリックで1回の音声鳴らすからnew Audio(...)のほうが管理がラク
     const syuukaku = new Audio("{{ url_for('static', filename='sounds/syuukaku.wav') }}");
-    syuukaku.volume = 0.5; // お好みで音量調整
+    syuukaku.volume = 0.5; 
     let count = 0;
 
     function createCarrot() {
@@ -70,7 +184,7 @@
 
       img.ondblclick = () => {
         syuukaku.currentTime = 0;
-        syuukaku.play(); // ← ダブルクリック時に1回だけ鳴らす
+        syuukaku.play(); 
         img.remove();
         count++;
         if (count >= 10) {
@@ -88,3 +202,5 @@
 </body>
 
 </html>
+
+=============================== -->

@@ -7,9 +7,9 @@ import time #時刻の取得、待機時間、経過時間の計測などに使�
 import json # PythonのデータをJSON形式で保存・読み込みするために使う
 
 app = Flask(__name__) #Flaskアプリのインスタンスを作る
-app.secret_key = 'your_secret_key'  #セッションを安全に扱うための「秘密鍵」を設定
+app.secret_key = 'your_secret_key'  #セッションを安全に扱うための「秘密鍵」を設定【下に追記】
 
-# ランキングJSONファイルのパス（同じフォルダに置く想定）
+#ランキングJSONファイルのパス(同じフォルダに置く想定)
 RANKING_FILE = 'ranking.json'
 
 @app.route('/') #URLのルート(トップページ / )にアクセスしたら、login.htmlを返す
@@ -46,25 +46,25 @@ def start():
 @app.route('/stage1') #/stage1にアクセスしたら、stage1.htmlを返す
 def stage1():
     session['stage1_start'] = time.time()  # 開始時間を最新にセット
-    # ステージ1の画面描画処理など
+    #ステージ1の画面描画処理など
     return render_template('stage1.html')
 
 
 @app.route('/stage2') #/stage2にアクセスしたら、stage2.htmlを返す
 def stage2():
-    # ステージ2開始時刻を保存
+    #ステージ2開始時刻を保存
     session['stage2_start'] = time.time()
     return render_template('stage2.html')
 
 @app.route('/stage3') #/stage3にアクセスしたら、stage3.htmlを返す
 def stage3():
-    # ステージ3開始時刻を保存
+    #ステージ3開始時刻を保存
     session['stage3_start'] = time.time()
     return render_template('stage3.html')
 
 @app.route('/stage4') #/stage4にアクセスしたら、stage4.htmlを返す
 def stage4():
-    # ステージ4開始時刻を保存
+    #ステージ4開始時刻を保存
     session['stage4_start'] = time.time()
     return render_template('stage4.html')
 
@@ -82,7 +82,7 @@ def clear():
     else:
         elapsed = 0.0 #なければ0.0(例外対策)
 
-    # ランキングファイルがあれば読み込む、エラー時や存在しないときは空リストにする
+    #ランキングファイルがあれば読み込む、エラー時や存在しないときは空リストにする
     if os.path.exists(RANKING_FILE):
         with open(RANKING_FILE, 'r', encoding='utf-8') as f: #RANKING_FILE(ランキングのJSONファイル)があれば開いて'r'読み込み
             try:
@@ -92,7 +92,7 @@ def clear():
     else:
         ranking = [] #なければ空リストから始める
 
-    # 今回の記録（名前・ステージ・時間・日時）をランキングに追加
+    #今回の記録(名前・ステージ・時間・日時)をランキングに追加
     entry = {
         'name': username,
         'stage': stage,
@@ -101,19 +101,19 @@ def clear():
     }
     ranking.append(entry)
 
-    # ステージ順、クリア時間順にソート（全体のランキング）
+    #ステージ順、クリア時間順にソート(全体のランキング)
     ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
-    # **指定ステージのみ抽出して上位5件に絞る**
+    #指定ステージのみ抽出して上位5件に絞る
     filtered_ranking = [r for r in ranking if r['stage'] == stage][:5] #今回クリアしたステージだけに絞って、上位5人分だけを取り出す
 
 
-    # ファイルに書き込み（全体のランキングをJSONファイルに保存）
+    #ファイルに書き込み（全体のランキングをJSONファイルに保存）
     with open(RANKING_FILE, 'w', encoding='utf-8') as f:
         json.dump(ranking, f, ensure_ascii=False, indent=2)
 
-    # enumerateはテンプレート側で使うので渡す【下に追記】
+    #enumerateはテンプレート側で使うので渡す【下に追記】
     return render_template('clear.html', from_stage=stage, elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
-#★
+
 #/next_stageにPOSTで現在のステージ番号を受け取り、次のステージのページにリダイレクトする
 @app.route('/next_stage', methods=['POST'])
 def next_stage():
@@ -135,7 +135,7 @@ def continue_stage():
 
 @app.route('/allclear') #/allclearにアクセスしたら、allclear.htmlを返す
 def allclear():
-    # AllClear時は最終ステージ（例：4）として処理
+    #AllClear時は最終ステージ(例：4)として処理
     stage = '4'
     username = session.get('username', '匿名')
 
@@ -146,7 +146,7 @@ def allclear():
     else:
         elapsed = 0.0
 
-    # ランキング読み込み
+    #ランキング読み込み
     if os.path.exists(RANKING_FILE):
         with open(RANKING_FILE, 'r', encoding='utf-8') as f:
             try:
@@ -156,7 +156,7 @@ def allclear():
     else:
         ranking = []
 
-    # 新記録を追加（日時も追加）
+    #新記録を追加(日時も追加)
     entry = {
         'name': username,
         'stage': stage,
@@ -165,21 +165,21 @@ def allclear():
     }
     ranking.append(entry)
 
-    # ステージ順、クリア時間順にソート（全体のランキングを整列）
+    #ステージ順、クリア時間順にソート(全体のランキングを整列)
     ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
 
-    # ステージ4に該当する上位5件だけを抽出
+    #ステージ4に該当する上位5件だけを抽出
     filtered_ranking = [r for r in ranking if r['stage'] == stage][:5]
 
-    # 全体のランキングを保存（上書き）
+    #全体のランキングを保存（上書き）
     with open(RANKING_FILE, 'w', encoding='utf-8') as f:
         json.dump(ranking, f, ensure_ascii=False, indent=2)
 
-    # ★ セッションからステージ開始時間を削除
+    #セッションからステージ開始時間を削除
     if start_key in session:
         session.pop(start_key)
 
-    # allclear.html に必要なデータを渡す
+    #allclear.html に必要なデータを渡す
     return render_template('allclear.html', elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
 
 
@@ -209,6 +209,12 @@ Flask(...)：Flaskのアプリを作る命令
 __name__：今動いているこのファイルの名前が入る⇒どこにHTMLファイルや静的ファイルがあるかを知るため
 __name__ を使って**アプリの場所（フォルダ）**を判断
 app = ...：作ったFlaskアプリをappという変数に入れて使う
+
+★app.secret_key = 'your_secret_key'
+・Flaskの session はユーザーごとに情報（例：ログイン状態、名前、開始時間など）を一時的に保持する仕組み
+・このセッション情報はクライアント側（ブラウザ）に暗号化された形で保存される
+・そのため、内容が改ざんされていないかを検証するための署名(サイン)が必要
+・その署名に使われるのがsecret_key(秘密鍵)
 
 ★@app.route('/') ⇒ URLの / (トップページ)にアクセスしたときに動かして
 def login(): ⇒ loginという名前の関数を作る
@@ -301,7 +307,6 @@ def stage1():
     session['stage1_start'] = time.time()
     return render_template('stage1.html')
 
-
 @app.route('/stage2')
 def stage2():
     session['stage2_start'] = time.time()
@@ -327,7 +332,7 @@ def clear():
     if start_time:
         elapsed = round(time.time() - start_time, 2)
     else:
-        elapsed = 0.0
+        elapsed = 0.0 #なければ0.0(例外対策)
 
     if os.path.exists(RANKING_FILE):
         with open(RANKING_FILE, 'r', encoding='utf-8') as f:
@@ -347,7 +352,6 @@ def clear():
     ranking.append(entry)
 
     ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
-
     filtered_ranking = [r for r in ranking if r['stage'] == stage][:5]
 
     with open(RANKING_FILE, 'w', encoding='utf-8') as f:
@@ -413,7 +417,6 @@ def allclear():
         session.pop(start_key)
 
     return render_template('allclear.html', elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
-
 
 @app.route('/end')
 def end():

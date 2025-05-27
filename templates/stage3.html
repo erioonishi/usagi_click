@@ -39,6 +39,97 @@
   </div>
 
   <script>
+  const container = document.getElementById('container');//container要素を取得(にんじんなどを入れるために使う)
+  let count = 0;//countはにんじんをカバンに入れた数を数える変数
+
+  //音声オブジェクトを作成
+  const kabanSound = new Audio("{{ url_for('static', filename='sounds/kaban.wav') }}");
+  kabanSound.volume = 0.2;
+
+  for (let i = 0; i < 3; i++) {//にんじんを3つ作るループ
+    const img = document.createElement('img');
+    img.src = "{{ url_for('static', filename='images/ninjin.png') }}";
+    img.className = 'carrot';
+    const baseLeft = 435;
+    const spacing = 110;
+    img.style.left = (baseLeft + i * spacing) + 'px';//にんじんの横位置を間隔をあけて配置(435px, 545px, 655px)
+    img.style.top = '270px';//縦位置は共通して270px
+    img.draggable = true;//画像をドラッグ可能に設定
+    img.ondragstart = e => {//ドラッグが始まるときのイベントハンドラ
+      e.dataTransfer.setData('text/plain', i);//ドラッグ中のデータとしてi(何番目か)を保存(今動かしてるのはこの順番のにんじんだよと覚えさせる)
+      e.target.id = 'dragging';//ドラッグ中の要素にid="dragging"を付ける(あとでどのにんじんが動かされてるか判定)
+    };
+    container.appendChild(img);//作成したにんじん画像をcontainerに追加(実際に画面ににんじんが現れる)
+  }
+
+  const bag = document.getElementById('bag');
+  bag.ondragover = e => e.preventDefault();//カバンの上でドラッグ中のアイテムを受け取れるようにする(標準動作を無効化)
+  bag.ondrop = e => {
+    e.preventDefault();//カバンにドロップされたときの処理開始
+    const dragging = document.getElementById('dragging');
+    if (dragging) {
+      dragging.remove();//draggingというIDの要素(つまりドラッグ中のにんじん)を取得して削除
+
+      //音を鳴らす(再生位置を先頭にしてplay)
+      kabanSound.currentTime = 0;
+      kabanSound.play();
+
+      count++;
+      if (count >= 3) {//にんじんを1つ入れたらカウント増加
+        setTimeout(() => window.location.href = "/clear?from_stage=3", 800);//3つすべて入れたら0.8秒後にクリア画面(/clear?from_stage=3)へ遷移
+      }
+    }
+  };
+</script>
+</body>
+
+</html>
+
+
+<!-- ===============================
+
+★★コメントなしのコードが必要な場合★★
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ステージ3：かばんに入れよう</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
+    body {
+
+      cursor: url("{{ url_for('static', filename='images/usagicur.png') }}") 20 20,
+      auto;
+
+    }
+
+    .carrot {
+      position: absolute;
+      width: 100px;
+      cursor: inherit;
+    }
+
+    #bag {
+      position: absolute;
+      left: 50px;
+      top: 250px;
+      width: 150px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="game-wrapper">
+    <h1 style="text-align:center">ドラッグしてにんじんをカバンへ！</h1>
+    <div id="container">
+      <img id="bag" src="{{ url_for('static', filename='images/kaban.png') }}">
+    </div>
+  </div>
+
+  <script>
   const container = document.getElementById('container');
   let count = 0;
 
@@ -84,3 +175,5 @@
 </body>
 
 </html>
+
+=============================== -->

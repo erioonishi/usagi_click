@@ -8,8 +8,233 @@
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
+    #game-wrapper {/*ゲーム全体の上の余白を調整*/
+      /*ここだけ上に文章があるので無理やり上書き*/
+      margin-top: 20px;
+    }
+
+    #instructions {/*説明文のスタイル*/
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: none;
+      cursor: grab; /*ドラッグ可能な「手」カーソル(パーの手)*/
+    }
+
+    canvas.dragging {
+      cursor: grabbing;/*ドラッグ中の「握った手」カーソル(グーの手)*/
+    }
+  </style>
+</head>
+
+<body>
+  <h1>うさちゃんお家へ帰る</h1>
+  <div id="instructions">道からはみ出さずにうさちゃんをお家までドラッグしてください（離さないでね🐰）</div>
+  <div id="game-wrapper">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+  </div>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');//キャンバスを取得し、2D描画できるように設定
+
+  //道・家・うさちゃんの画像を作成
+  const michiImg = new Image();
+  const houseImg = new Image();
+  const usagiImg = new Image();
+  const audio = new Audio("{{ url_for('static', filename='sounds/tokotoko.wav') }}"); //音声ファイルの読み込み
+  audio.volume = 0.3;
+
+  let soundInterval = null; //音再生用のタイマーID
+
+  //各画像のファイルパスを設定
+  michiImg.src = "{{ url_for('static', filename='images/michi.png') }}";
+  houseImg.src = "{{ url_for('static', filename='images/house.png') }}";
+  usagiImg.src = "{{ url_for('static', filename='images/usagi.png') }}";
+
+  //画像3枚すべてが読み込まれたらゲームを初期化(すべての素材がそろってからゲームを開始するための安全な仕組み)
+  let imagesLoaded = 0;//読み込まれた画像の数を数える変数です最初は0でスタート
+  function onImageLoad() {
+    imagesLoaded++;//画像が1枚読み込まれるたびにimagesLoadedを1増やす
+    if (imagesLoaded === 3) {
+      initGame();//3枚すべての画像が読み込まれたら、ゲームを初期化するinitGame()を呼ぶ
+    }//これにより画像がまだ表示できない状態でゲームが始まってしまうのを防ぐ
+  }
+
+  //画像の読み込みが完了したらonImageLoadを呼ぶ
+  michiImg.onload = onImageLoad;
+  houseImg.onload = onImageLoad;
+  usagiImg.onload = onImageLoad;
+
+  //うさちゃんとお家の位置とサイズを設定
+  let usagiX = 710;
+  let usagiY = 520;
+  const usagiSize = 48;
+  const houseX = 20;
+  const houseY = 20;
+  const houseWidth = 100;
+  const houseHeight = 100;
+
+  //ドラッグ中かどうかマウスとのズレ道のピクセル情報
+  let dragging = false;//うさちゃんを今ドラッグ中かどうかを表すフラグ(trueになるのはマウスでうさちゃんをつかんだとき)
+  let offsetX, offsetY;//マウスでうさちゃんをつかんだときのずれを覚えておく変数(うさちゃんの頭をクリックしたら頭からずっとドラッグされるようにするために必要)
+  let pathPixels;//道の画像の中身のピクセルデータをここに保存(うさちゃんが道からはみ出していないか？をチェック)
+
+  //ゲーム初期化(道を描いてピクセル情報を取得しゲーム開始)
+  function initGame() {//initGameという名前の関数を定義(ゲーム開始時に最初に呼び出してゲーム画面を準備)
+    //キャンバス(canvas)の描画コンテキスト(ctx)に道の画像michiImgを描く。
+    //(0, 0)は描き始める左上の位置、canvas.width,canvas.heightはキャンバスいっぱいに広げる指定
+    ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+    //今描いたキャンバスの画像データを取得してpathPixels変数に保存(道がどこにあるかをピクセル単位で後から判定)
+    pathPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    drawScene();//キャンバスの背景や家の画像などゲームの基本的なシーン全体を描画
+    drawUsagi(usagiX, usagiY);//drawUsagi関数を呼んでうさちゃんを指定した座標(usagiX, usagiY)に描画
+  }
+
+  //描画関数(背景（道と家）とうさちゃんを描く)
+  function drawScene() {//ゲーム画面全体（背景と家）を描き直す処理
+    //キャンバス全体を一旦初期化(clearRectは指定した範囲を透明に)命令で毎回描き直すため以前描いた内容を消す
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //道の画像(michiImg)をキャンバスいっぱいに描画左上(0, 0)に貼り付けてキャンバス全体に広げる形
+    ctx.drawImage(michiImg, 0, 0, canvas.width, canvas.height);
+    //家の画像(houseImg)を指定した位置(houseX,houseY)と大きさ(houseWidth,houseHeight)で描く(道の上に家を重ねて表示する形)
+    ctx.drawImage(houseImg, houseX, houseY, houseWidth, houseHeight);
+  }
+
+  function drawUsagi(x, y) {//うさちゃんの画像(usagiImg)を座標(x, y)に描画する(幅と高さはusagiSize48×48px表示)
+    ctx.drawImage(usagiImg, x, y, usagiSize, usagiSize);
+  }
+
+  //道の判定
+  function isOnPath(x, y) {//x, yという座標が道の上にあるか？を判定する関数
+    if (!pathPixels) return false;//pathPixelsがまだ読み込まれていない()=画像のピクセルデータがない)場合は道じゃないと判定してfalseを返す
+    const px = Math.floor(x);//x, yは小数(マウス座標)になっていることがあるので整数に丸めてキャンバス上のピクセル座標に変換
+    const py = Math.floor(y);
+    if (px < 0 || py < 0 || px >= canvas.width || py >= canvas.height) return false;//キャンバスの外を指していたら道じゃないのでfalseを返す
+    if (//座標がおうちのエリア(四角い範囲)内にある場合は特別にOKとみなしてtrueを返す(道ではないけどゴールなのでセーフ)
+      x >= houseX &&
+      x <= houseX + houseWidth &&
+      y >= houseY &&
+      y <= houseY + houseHeight
+    ) {
+      return true;
+    }
+    const idx = (py * canvas.width + px) * 4;//キャンバス上の(px, py)にあるpxのデータ位置を計算(1pxあたり4つのデータ(R,G,B,A)なので* 4
+    const r = pathPixels.data[idx];//指定ピクセルのRGB値(赤・緑・青)を取り出す
+    const g = pathPixels.data[idx + 1];
+    const b = pathPixels.data[idx + 2];
+    return (r >= 250 && g >= 250 && b >= 250);//白っぽい部分が道(3つの値(r,g,b)が全部250以上つまりほぼ白だったら道と判断してtrueを返す)
+  }
+
+  //音のループ処理(音を繰り返し再生＆停止する関数)
+  function startSoundLoop() {//音を繰り返し鳴らす処理を開始する関数
+    if (!soundInterval) {//すでに繰り返し処理が始まっているかをチェック(二重で再生しないように)
+      audio.play();//最初に一度音を再生
+      soundInterval = setInterval(() => {//setIntervalの戻り値(繰り返し処理のID)をsoundIntervalに保存
+        audio.currentTime = 0;//音を先頭から再生し直す
+        audio.play();
+      }, 500);//0.5秒(500ミリ秒)ごとに音を再生
+    }
+  }
+
+  function stopSoundLoop() {//音を止める処理
+    clearInterval(soundInterval);//setInterval()で開始した繰り返し処理(音を鳴らす)を停止
+    soundInterval = null;//今は繰り返し処理が行われていない状態を示すため変数をリセット(次にstartSoundLoop()を呼んだときに再び音を鳴らせるように)
+  }
+
+  //マウス操作イベント(うさちゃんをクリックしたらドラッグ開始)
+  //マウスのボタンが押されたときの処理を登録("mousedown"は押し始めのイベント)eはイベントオブジェクトでどこをクリックしたかなどの情報が入っている
+  canvas.addEventListener('mousedown', (e) => {
+    const rect = canvas.getBoundingClientRect();//canvas要素の位置とサイズを取得
+    const mx = e.clientX - rect.left;//canvas内でのX座標
+    const my = e.clientY - rect.top;
+    //うさちゃん画像の範囲内をクリックしたかどうかの判定(画像の左上から右下までの範囲にマウス座標が入っていればtrue)
+    if (mx >= usagiX && mx <= usagiX + usagiSize && my >= usagiY && my <= usagiY + usagiSize) {
+      dragging = true;
+      offsetX = mx - usagiX;//マウスの位置とうさちゃん画像の位置の差を記録(クリックした場所に合わせてうさちゃんが自然に動く)
+      offsetY = my - usagiY;
+      canvas.classList.add('dragging');//グーの手に変える
+      startSoundLoop(); //ドラッグ開始時に音再生開始
+    }
+  });
+
+  //ドラッグ中に道からはみ出したらやり直し(/continue に移動）
+  canvas.addEventListener('mousemove', (e) => {//マウスが動いたときに呼ばれる処理を登録(eはマウスの位置などが入っている)
+    if (!dragging) return;//ドラッグ中でなければ何もしない
+    const rect = canvas.getBoundingClientRect();//canvasの画面上の位置や大きさを取得
+    const mx = e.clientX - rect.left;//canvas内でのマウス位置を計算
+    const my = e.clientY - rect.top;//うさちゃんの中心座標(マウス座標を基準に補正)を計算
+    let newX = mx - offsetX + usagiSize / 2;
+    let newY = my - offsetY + usagiSize / 2;
+
+    if (!isOnPath(newX, newY)) {//うさちゃんの中心が道(白い部分)に乗っているか？を判定
+      dragging = false;//道から外れていたらドラッグ終了
+      canvas.classList.remove('dragging');//CSSのdraggingクラスを外してカーソルを元に戻す(グーからパーに)
+      stopSoundLoop(); //離れたら音停止
+      window.location.href = "/continue";//道から外れたためゲームのcontinue画面へ自動的に遷移
+      return;//ここで処理を終わらせる(道外れの場合は以降の処理をしない)
+    }
+
+    usagiX = mx - offsetX;//道から外れていなければマウスの動きに合わせてうさちゃんの位置を更新
+    usagiY = my - offsetY;
+    drawScene();//道や家などの背景を再描画
+    drawUsagi(usagiX, usagiY);//更新したうさちゃんの位置に画像を再描画
+  });
+
+  //マウスが外れたときもゲームオーバー扱いに
+  canvas.addEventListener('mouseup', () => {//anvas上でマウスのボタンを離した(クリックを終えた)瞬間に呼ばれる処理を登録
+    if (!dragging) return;//ドラッグしていない状態なら何もしない
+    dragging = false;//ドラッグを終了(falseにセット)
+    canvas.classList.remove('dragging');//CSSで付けていたdraggingクラスを外す(グーからパー)
+    stopSoundLoop(); //ドラッグ終了時に音停止
+    if (//うさちゃんの画像が家の範囲内にあるかを判定(全て満たされるとうさちゃんは家の中にいる)
+      usagiX + usagiSize > houseX &&//うさちゃんの右端が家の左端より右にあるか
+      usagiX < houseX + houseWidth &&//うさちゃんの左端が家の右端より左にあるか
+      usagiY + usagiSize > houseY &&//うさちゃんの下端が家の上端より下にあるか
+      usagiY < houseY + houseHeight//うさちゃんの上端が家の下端より上にあるか
+    ) {
+      window.location.href = "/allclear";//うさちゃんが無事家に入ったのですべてクリア画面へ移動
+    } else {//もし家に入っていなければ
+      window.location.href = "/continue";//ゲームのcontinue画面に移動
+    }
+  });
+
+  canvas.addEventListener('mouseleave', () => {//マウスカーソルがcanvasの領域から外れた瞬間に呼ばれる処理
+    if (dragging) {//現在ドラッグ中であれば次の処理を実行
+      dragging = false;//ドラッグを終了
+      canvas.classList.remove('dragging');//CSSのdraggingクラスを外す
+      stopSoundLoop(); //マウス外れたら音停止
+      window.location.href = "/continue";//ゲームのcontinue画面に移動
+    }
+  });
+</script>
+
+
+</body>
+
+</html>
+
+
+
+<!-- ===============================
+
+★★コメントなしのコードが必要な場合★★
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ステージ4：うさちゃんお家へ帰る</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
     #game-wrapper {
-      /* ここだけ上に文章があるので無理やり上書き */
       margin-top: 20px;
     }
 
@@ -17,7 +242,6 @@
       text-align: center;
       font-size: 18px;
       font-weight: bold;
-      /* ← 太字に追加 */
       margin-top: 10px;
     }
 
@@ -27,12 +251,10 @@
 
       border: none;
       cursor: grab;
-      /* パーの手 */
     }
 
     canvas.dragging {
       cursor: grabbing;
-      /* グーの手 */
     }
   </style>
 </head>
@@ -144,7 +366,7 @@
       offsetX = mx - usagiX;
       offsetY = my - usagiY;
       canvas.classList.add('dragging');
-      startSoundLoop(); // ★ ドラッグ開始時に音再生開始
+      startSoundLoop();
     }
   });
 
@@ -159,7 +381,7 @@
     if (!isOnPath(newX, newY)) {
       dragging = false;
       canvas.classList.remove('dragging');
-      stopSoundLoop(); // ★ 離れたら音停止
+      stopSoundLoop();
       window.location.href = "/continue";
       return;
     }
@@ -174,7 +396,7 @@
     if (!dragging) return;
     dragging = false;
     canvas.classList.remove('dragging');
-    stopSoundLoop(); // ★ ドラッグ終了時に音停止
+    stopSoundLoop();
     if (
       usagiX + usagiSize > houseX &&
       usagiX < houseX + houseWidth &&
@@ -191,7 +413,7 @@
     if (dragging) {
       dragging = false;
       canvas.classList.remove('dragging');
-      stopSoundLoop(); // ★ マウス外れたら音停止
+      stopSoundLoop();
       window.location.href = "/continue";
     }
   });
@@ -201,3 +423,4 @@
 </body>
 
 </html>
+=============================== -->
