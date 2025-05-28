@@ -14,7 +14,7 @@ RANKING_FILE = 'ranking.json'
 
 @app.route('/') #URLのルート(トップページ / )にアクセスしたら、login.htmlを返す
 def root():
-    return redirect(url_for('login'))
+    return redirect(url_for('login')) #redirect(リダイレクト)は、別の場所へ自動的に移動させるという意味
 
 #ログイン画面の処理でPOSTされたパスワードが「usa」なら成功、それ以外ならエラーメッセージを表示
 @app.route('/login', methods=['GET', 'POST']) #ページを表示するGETとフォームを送信するPOST両方のリクエストを受け付ける
@@ -26,7 +26,7 @@ def login():
             return redirect(url_for('index'))
         else:
             error = 'パスワードが間違っています'
-    return render_template('login.html', error=error)
+    return render_template('login.html', error=error) #render(レンダー)は、表示するという意味
 
 @app.route('/index')#/indexにアクセスしたら、index.htmlを返す
 def index():
@@ -42,13 +42,13 @@ def start():
         session['stage1_start'] = time.time()  # ステージ1開始時刻を保存
         return redirect('/stage1') #入力が正しくできていれば、次のステージ/stage1に進む
     return redirect('/') #ユーザー名が入力されていなかった場合(空欄)トップページに戻す(/→ログインにリダイレクト)
+    #session(セッション)はユーザーごとの一時的なデータの保存領域を指す
 
 @app.route('/stage1') #/stage1にアクセスしたら、stage1.htmlを返す
 def stage1():
     session['stage1_start'] = time.time()  # 開始時間を最新にセット
     #ステージ1の画面描画処理など
     return render_template('stage1.html')
-
 
 @app.route('/stage2') #/stage2にアクセスしたら、stage2.htmlを返す
 def stage2():
@@ -81,11 +81,12 @@ def clear():
         elapsed = round(time.time() - start_time, 2) #開始時刻がある場合は現在時刻との差から経過時間を計算(秒、少数2位まで)
     else:
         elapsed = 0.0 #なければ0.0(例外対策)
+    #elapsed(イラプスト)経過したという意味⇒かかった時間
 
     #ランキングファイルがあれば読み込む、エラー時や存在しないときは空リストにする
-    if os.path.exists(RANKING_FILE):
+    if os.path.exists(RANKING_FILE): #exists(イグジスツ)は存在するという意味
         with open(RANKING_FILE, 'r', encoding='utf-8') as f: #RANKING_FILE(ランキングのJSONファイル)があれば開いて'r'読み込み
-            try:
+            try: #【下に追記】
                 ranking = json.load(f)
             except json.JSONDecodeError:
                 ranking = [] #ファイルが壊れている場合も例外処理で空リスト
@@ -97,19 +98,19 @@ def clear():
         'name': username,
         'stage': stage,
         'time': elapsed,
-        'datetime': time.strftime('%Y-%m-%d %H:%M:%S')
+        'datetime': time.strftime('%Y-%m-%d %H:%M:%S') #strftime日付や時刻を文字列(str)に変換するための関数
     }
     ranking.append(entry)
 
     #ステージ順、クリア時間順にソート(全体のランキング)
-    ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time']))
+    ranking = sorted(ranking, key=lambda x: (int(x['stage']), x['time'])) #x⇒変数、lambda(ラムダ)⇒名前のない関数(＝無名関数)
     #指定ステージのみ抽出して上位5件に絞る
     filtered_ranking = [r for r in ranking if r['stage'] == stage][:5] #今回クリアしたステージだけに絞って、上位5人分だけを取り出す
 
 
     #ファイルに書き込み（全体のランキングをJSONファイルに保存）
     with open(RANKING_FILE, 'w', encoding='utf-8') as f:
-        json.dump(ranking, f, ensure_ascii=False, indent=2)
+        json.dump(ranking, f, ensure_ascii=False, indent=2) #json.dump⇒Pythonのデータ(辞書やリストなど)をJSON形式のファイルに書き込む関数【下に追記】
 
     #enumerateはテンプレート側で使うので渡す【下に追記】
     return render_template('clear.html', from_stage=stage, elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
@@ -211,10 +212,11 @@ __name__ を使って**アプリの場所（フォルダ）**を判断
 app = ...：作ったFlaskアプリをappという変数に入れて使う
 
 ★app.secret_key = 'your_secret_key'
-・Flaskの session はユーザーごとに情報（例：ログイン状態、名前、開始時間など）を一時的に保持する仕組み
-・このセッション情報はクライアント側（ブラウザ）に暗号化された形で保存される
+・Flaskのsessionはユーザーごとに情報(例：ログイン状態、名前、開始時間など)を一時的に保持する仕組み
+・このセッション情報はクライアント側(ブラウザ)に暗号化された形で保存される
 ・そのため、内容が改ざんされていないかを検証するための署名(サイン)が必要
 ・その署名に使われるのがsecret_key(秘密鍵)
+※実際に現場で使うときはもっと複雑なkeyにする
 
 ★@app.route('/') ⇒ URLの / (トップページ)にアクセスしたときに動かして
 def login(): ⇒ loginという名前の関数を作る
@@ -235,12 +237,26 @@ def clear(): ⇒ clearという名前の関数を作り/clearにアクセスさ�
     「ステージ2クリア」と表示ができる
 まとめると/clear?from_stage=2 のようにアクセスされたらそのステージ番号(ここでは2)をclear.htmlに渡して表示する
 
+★try-except文は、Pythonにおけるエラー処理(例外処理)のための構文
+⇒もしエラーが起きても、止まらず別の処理をする
+try     エラーが起きそうな処理を書く
+except	エラーが起きたときにどうするか書く
+else	tryが成功(＝エラーなし)だったとき実行
+finally	エラーの有無に関係なく、最後に必ず実行される(ファイルの後始末などに便利)
+
+★ json.dump(ranking, f, ensure_ascii=False, indent=2) 
+ranking⇒Pythonのリストや辞書などのデータ(ここではランキング情報のリストなど)
+f⇒書き込み用に開いているファイルオブジェクト
+ensure_ascii=False⇒日本語などの非ASCII文字をそのまま文字として保存(Unicodeエスケープせずに読みやすく)
+indent=2⇒JSONファイルの出力をインデント(字下げ))2スペースで整形
+
 ★return render_template('clear.html', from_stage=stage, elapsed=elapsed, ranking=filtered_ranking, enumerate=enumerate)
 clear.html にデータを渡して表示する
 ・from_stage: 何ステージをクリアしたか
-・elapsed: そのステージのクリアタイム
+・elapsed: (エラプスト)そのステージのクリアタイム
 ・ranking: 指定ステージの上位5人のランキング
-・・enumerate: HTMLでランキング順位を表示するため({% for i, r in enumerate(ranking) %}などで使う)
+・enumerate: HTMLでランキング順位を表示するため({% for i, r in enumerate(ranking) %}などで使う)
+  (イナマーレート)は、リストやタプルなどの繰り返し可能なものをループするときに、同時にインデックス番号(何番目か)も取得できる便利な関数
 
 ★@app.route('/shutdown', methods=['POST'])
 ⇒/shutdownというURLにアクセスされたときにHTTPのPOSTメソッドで来たリクエストだけを受け付ける(GETでは動かないように制限）

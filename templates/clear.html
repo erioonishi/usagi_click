@@ -8,6 +8,153 @@
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
+ h1.clear {/*大きな見出し(h1)の文字サイズや余白を調整*/
+    text-align: center;
+    margin-top: 40px;      /*元140px → 60pxに縮小*/
+    font-size: 30px;       /*元60px → 40pxに縮小*/
+    position: relative;
+    z-index: 10;
+  }
+    #btns {/*ボタン類の位置や間隔の調整*/
+      margin-top: 30px;
+      text-align: center;
+    }
+    form {/*フォーム（ボタン含む）の表示形式を横並びに*/
+      display: inline-block;
+      margin: 0 15px;
+    }
+    #ranking {/*ランキング表の枠・文字・中央寄せ設定*/
+      font-weight: bold;
+      width: 700px;
+      margin: 30px auto;
+      font-family: 'Yomogi', cursive;
+    }
+    #ranking table {
+      width: 100%;
+      border-collapse: collapse;/*表の枠線が二重にならないように隣接する線を1本にまとめる*/
+    }
+    #ranking th, #ranking td {/*表の見出し（<th>）とセル（<td>）の両方に共通のデザインを適用*/
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    #ranking th {/*見出し部分だけ*/
+      background-color: #f0e68c;
+    }
+  p.clear-time {/*クリア時間表示の文字サイズ・配置*/
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="game-wrapper">
+    <!--クリアした人の名前(または匿名)とステージ番号を表示Flaskのテンプレート構文を使って動的に表示-->
+    <h1 class="clear">{{ session.username or '匿名' }}さん、ステージ{{ from_stage }}のクリアお疲れさま！</h1>
+    <p class="clear-time">クリア時間：{{ elapsed }} 秒</p><!--クリアにかかった時間を表示(これもテンプレートで自動表示)-->
+
+    <div id="ranking">
+      <h2 style="text-align:center;">ランキング（上位10件）</h2>
+      <table>
+        <thead><!--表の見出し-->
+          <tr>
+            <th>順位</th>
+            <th>名前</th>
+            <th>ステージ</th>
+            <th>クリア時間（秒）</th>
+            <th>日時</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in ranking[:5] %}<!--Flaskのテンプレート構文で、ランキング上位5件のデータを繰り返し表示-->
+          <tr><!--ランキング1件ずつ行で表示。順位・名前などをrecordの情報から表示-->
+            <td>{{ loop.index }}</td>
+            <td>{{ record.name }}</td>
+            <td>{{ record.stage }}</td>
+            <td>{{ record.time }}</td>
+            <td>{{ record.datetime or '' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="btns"><!--「次に進む」や「今日は終わる」ボタンの部分【下に追記】-->
+      <form action="/next_stage" method="post">
+        <input type="hidden" name="from_stage" value="{{ from_stage }}">
+        <button type="submit">次に進む？</button>
+      </form>
+      <form action="/end" method="get">
+        <button type="submit">今日は終わる？</button>
+      </form>
+    </div>
+  </div>
+
+  <!--クリア音 -->
+  <audio id="clear-sound" src="{{ url_for('static', filename='sounds/clear.wav') }}" preload="auto"></audio>
+
+  <!--JavaScriptでページ読み込み時に自動でクリア音を再生(再生失敗時はエラーをコンソールに出力)【下に追記】-->
+ <script> 
+    window.addEventListener('DOMContentLoaded', () => {
+      const clearSound = document.getElementById('clear-sound');
+      clearSound.volume = 0.5;
+      clearSound.play().catch(e => {
+        console.log('自動再生が制限されています:', e);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
+
+
+<!-- ===============================
+
+★window.addEventListener('DOMContentLoaded', () => {
+      const clearSound = document.getElementById('clear-sound');
+      clearSound.volume = 0.5;
+      clearSound.play().catch(e => {
+        console.log('自動再生が制限されています:', e);
+      });
+    });
+・window.addEventListener(...)⇒ウェブページのあるイベントが起きたときに特定の処理を実行するための設定
+・'DOMContentLoaded'⇒HTMLの読み込みが完了してDOM(要素の構造)が使えるようになったタイミングで発動するイベント(画像や音などの読み込みが終わる前に実行)
+・() => { ... }⇒イベントが起きたときに行う処理をまとめた「アロー関数（無名関数）」
+・document.getElementById('clear-sound')⇒HTML内のid="clear-sound"が付いた<audio>要素を探して取得
+・const clearSound⇒取得した音声要素をclearSoundという名前の変数に入れる(あとでこの変数で音を鳴らしたり操作できる)
+・clearSound.play()⇒音声を再生
+・.catch(...)⇒もし自動再生がブラウザによってブロックされたときの「エラー処理」
+・clearSound.play()⇒音声を再生
+
+★<form action="/next_stage" method="post">
+        <input type="hidden" name="from_stage" value="{{ from_stage }}">
+        <button type="submit">次に進む？</button>
+      </form>
+      <form action="/end" method="get">
+        <button type="submit">今日は終わる？</button>
+      </form>
+・<form action="/next_stage" method="post">⇒このフォームが送信されるとサーバーの/next_stageというURLにPOSTリクエストが送られる
+・<input type="hidden" name="from_stage" value="{{ from_stage }}">
+　⇒レイヤーがどのステージから来たのか(from_stage)を非表示でサーバーに送る{{ from_stage }}はFlaskテンプレートで値が埋め込まれる
+・<button type="submit">次に進む？</button>⇒クリックすると上のフォーム(POST)をサーバーに送信
+・<form action="/end" method="get">⇒/endにGETリクエストを送る(ゲームを終了する場合に使う)
+・<button type="submit">今日は終わる？</button>⇒クリックすると上のフォーム(GET)をサーバーに送信して終了画面へ移動
+
+★★コメントなしのコードが必要な場合★★
+<!DOCTYPE html>  
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Clear画面</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
  h1.clear {
     text-align: center;
     margin-top: 40px;      /* 元140px → 60pxに縮小 */
@@ -92,7 +239,7 @@
     </div>
   </div>
 
-  <!-- クリア音 -->
+
   <audio id="clear-sound" src="{{ url_for('static', filename='sounds/clear.wav') }}" preload="auto"></audio>
 
   <script>
@@ -108,3 +255,5 @@
 </body>
 
 </html>
+
+=============================== -->

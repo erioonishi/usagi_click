@@ -12,17 +12,17 @@
       font-size: 30px;
     }
 
-    p.browser_close {
+    p.browser_close {/*ブラウザも閉じてね🐰♡*/
       font-size: 20px;
       font-weight: bold;
     }
 
-    #content {
+    #content {/*コンテンツ全体*/
       text-align: center;
       padding-top: 70px;
     }
 
-    #close-btn {
+    #close-btn {/*おわりボタン*/
       font-size: 20px;
       padding: 10px 30px;
       cursor: pointer;
@@ -41,7 +41,7 @@
       animation-delay: 0s;
     }
 
-    @keyframes swing {
+    @keyframes swing {/*-15度から+15度まで左右に回転しながらゆらゆら*/
       0% {
         transform: rotate(-15deg);
       }
@@ -71,18 +71,18 @@
       <h1 class="end">おつかれさまでした♡</h1>
       <img id="usagi" src="{{ url_for('static', filename='images/usagi.png') }}" alt="うさちゃん" />
       <br />
-      <button id="close-btn">おわり</button>
+      <button id="close-btn">おわり</button><!--押すとサーバーに終了リクエストを送る-->
       <p class="browser_close">ブラウザも閉じてね🐰♡</p>
     </div>
   </div>
 
   <script>
     document.getElementById('close-btn').addEventListener('click', () => {
-      fetch('/shutdown', { method: 'POST' })
-        .then(() => {
+      fetch('/shutdown', { method: 'POST' })// /shutdown にPOSTリクエスト⇒Flask側でサーバーを停止
+        .then(() => {//リクエストが成功したときにウィンドウを閉じようとする
           window.close();
         })
-        .catch(() => {
+        .catch(() => {//リクエストが失敗したときでもウィンドウを閉じようとする
           window.close();
         });
     });
@@ -96,3 +96,4 @@
 </body>
 
 </html>
+

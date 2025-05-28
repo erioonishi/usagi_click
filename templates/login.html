@@ -20,7 +20,7 @@
       font-family: 'Yomogi', cursive;
     }
 
-    .login-box h1 {
+    .login-box h1 {/*ログイン文字*/
       font-size: 32px;
       text-align: center;
       margin-bottom: 30px;
@@ -30,14 +30,14 @@
       text-align: center;
     }
 
-    .login-box label {
+    .login-box label {/*パスワード文字*/
       display: block;
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    .login-box input[type="password"] {
+    .login-box input[type="password"] {/*パスワード入力欄*/
       width: 100%;
       max-width: 320px;
       padding: 12px 10px;
@@ -68,12 +68,14 @@
   <div class="login-container">
     <div class="login-box">
       <h1>ログイン</h1>
-      {% if error %}
+      {% if error %}<!--Flaskテンプレートでもしエラーがあれば赤文字で表示「パスワードが間違っています」-->
         <p class="error-msg">{{ error }}</p>
       {% endif %}
       <form method="POST">
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password" required>
+        <!--<input type="password">の部分が伏せ字(●や＊などの点や星の形で隠れる)で入力されることを意味-->
+        <!--required 属性があるので必ず入力しないとフォームを送信できない(必須入力)-->
         <button type="submit">ログイン</button>
       </form>
       <p class="PW">今回のPWは「usa」だよ🐰</p>
