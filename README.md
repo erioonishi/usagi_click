@@ -101,7 +101,7 @@ usagi_click/
 
 ## 📐 設計図（PDF）Web上での確認のため
 
-- [準備中です!PDFはこちらから見られます 📄](static/images/準備中です.pdf)
+- [PDFはこちらから見られます 📄](static/images/usagi.drawio.pdf)
 
 ## 💡 今後のアイデア
 
